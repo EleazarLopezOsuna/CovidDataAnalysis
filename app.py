@@ -1,7 +1,10 @@
 #python -m flask run --reload --debugger
 from flask import Flask, redirect, url_for, render_template, request
+from datetime import date
 
 app = Flask(__name__)
+
+columnas = ['Columna1', 'Columna2', 'Columna3']
 
 tendencias = {
     "Infección por Covid-19 en un País": "trendsCovidPerCountry",
@@ -19,7 +22,9 @@ def trendsVaccinatedPerCountry():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/trends/dailyInfectedPerCountry")
@@ -31,7 +36,9 @@ def trendsDailyInfectedPerCountry():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/trends/covidPerCountry")
@@ -43,7 +50,9 @@ def trendsCovidPerCountry():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/trends/confirmedPerState")
@@ -55,13 +64,15 @@ def trendsConfirmedPerState():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 tasas = {
-    "Comportamiento de casos activos en relación al número de muertes en un continente": "ratesCasosActivosMuertesContinente",
+    "Comportamiento de casos activos conforme al número de muertes por continente": "ratesCasosActivosMuertesContinente",
     "Mortalidad por coronavirus (COVID-19) en un país": "ratesMortalidadPais",
-    "Crecimiento de casos de COVID-19 en relación con nuevos casos diarios y tasa de muerte por COVID-19": "ratesCrecimientoCasosNuevosTasaMuerte"
+    "Crecimiento de casos en relación con nuevos casos diarios y tasa de muerte": "ratesCrecimientoCasosNuevosTasaMuerte"
 }
 
 @app.route("/rates/casosActivosMuertesContinente")
@@ -73,7 +84,9 @@ def ratesCasosActivosMuertesContinente():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/rates/mortalidadPais")
@@ -85,7 +98,9 @@ def ratesMortalidadPais():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/rates/crecimientoCasosNuevosTasaMuerte")
@@ -97,7 +112,9 @@ def ratesCrecimientoCasosNuevosTasaMuerte():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 predicciones = {
@@ -119,7 +136,9 @@ def predictionInfectadosPais():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/predictions/mortalidadDepartamento")
@@ -131,7 +150,9 @@ def predictionMortalidadDepartamento():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/predictions/mortalidadPais")
@@ -143,7 +164,9 @@ def predictionMortalidadPais():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/predictions/casosPaisYear")
@@ -155,7 +178,9 @@ def predictionCasosPaisYear():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/predictions/muertesUltimoDiaPrimerYearPais")
@@ -167,7 +192,9 @@ def predictionMuertesUltimoDiaPrimerYearPais():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/predictions/casosConfirmadosDia")
@@ -179,7 +206,9 @@ def predictionCasosConfirmadosDia():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/predictions/casosMuertesGlobal")
@@ -191,7 +220,9 @@ def predictionCasosMuertesGlobal():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 analisis = {
@@ -209,7 +240,9 @@ def analysisNumeroMuertesPais():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/analysis/comparacionVacunacionPaises")
@@ -221,7 +254,9 @@ def analysisComparacionVacunacionPaises():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/analysis/comparacionPaisesContinentes")
@@ -233,7 +268,9 @@ def analysisComparacionPaisesContinentes():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 porcentajes = {
@@ -250,7 +287,9 @@ def porcentagesHombresInfectadosPais():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/percentages/muertesCasosPaisRegionContinente")
@@ -262,7 +301,9 @@ def porcentagesMuertesCasosPaisRegionContinente():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 muertes = {
@@ -279,7 +320,9 @@ def deathsPromedioCasosEdad():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/deaths/regionPais")
@@ -291,7 +334,9 @@ def deathsRegionPais():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 otros = {
@@ -310,7 +355,9 @@ def othersIndiceProgresionPandemia():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/others/comportamientoClasificacionInfectadosMunicipioPais")
@@ -322,7 +369,9 @@ def othersComportamientoClasificacionInfectadosMunicipioPais():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/others/factoresMuertesPais")
@@ -334,7 +383,9 @@ def othersFactoresMuertesPais():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/others/comparacionCasosDetectadosNumeroPruebas")
@@ -346,7 +397,9 @@ def othersComparacionCasosDetectadosNumeroPruebas():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        columns = columnas
     )
 
 @app.route("/")
@@ -359,5 +412,6 @@ def home():
         percentages = porcentajes,
         predictions = predicciones,
         rates = tasas,
-        trends = tendencias
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d")
     )

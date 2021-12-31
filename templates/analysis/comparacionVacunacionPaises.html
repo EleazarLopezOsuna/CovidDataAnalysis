@@ -1,5 +1,37 @@
 {% extends "base.html" %}
 {% block title %}Coronavirus Data Analysis{% endblock %}
-
 {% block content %}
+<div class="container">
+    <form action="" class="row g-3">
+        <div class="col-md-6">
+            <label for="columnaPais" class="form-label">Pais</label>
+            <select id="columnaPais" class="form-select">
+                <option selected>Columna para pais</option>
+                {% for columna in columns %}
+                <option value={{columna}}>{{columna}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="nombrePais1" class="form-label">Nombre del Primer Pais</label>
+            <input type="text" class="form-control" id="nombrePais1" placeholder="Afganistan">
+        </div>
+        <div class="col-md-6">
+            <label for="nombrePais2" class="form-label">Nombre del Segundo Pais</label>
+            <input type="text" class="form-control" id="nombrePais2" placeholder="Afganistan">
+        </div>
+        <div class="col-md-6">
+            <label for="columnaVacunados" class="form-label">Vacunados</label>
+            <select id="columnaVacunados" class="form-select">
+                <option selected>Columna para vacunados</option>
+                {% for columna in columns %}
+                <option value={{columna}}>{{columna}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Calcular</button>
+        </div>
+    </form>
+</div>
 {% endblock %}

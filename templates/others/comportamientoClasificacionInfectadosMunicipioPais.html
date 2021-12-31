@@ -1,5 +1,77 @@
 {% extends "base.html" %}
 {% block title %}Coronavirus Data Analysis{% endblock %}
-
 {% block content %}
+<div class="container">
+    <form action="" class="row g-3">
+        {% include 'formBase.html'%}
+        <div class="col-md-6">
+            <label for="columnaDepartamento" class="form-label">Departamento</label>
+            <select id="columnaDepartamento" class="form-select">
+                <option selected>Columna para departamento</option>
+                {% for columna in columns %}
+                <option value={{columna}}>{{columna}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="nombreDepartamento" class="form-label">Nombre del Departamento</label>
+            <input type="text" class="form-control" id="nombreDepartamento" placeholder="">
+        </div>
+        <div class="col-md-6">
+            <label for="columnaMunicipio" class="form-label">Municipio</label>
+            <select id="columnaMunicipio" class="form-select">
+                <option selected>Columna para municipio</option>
+                {% for columna in columns %}
+                <option value={{columna}}>{{columna}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="nombreMunicipio" class="form-label">Nombre del Municipio</label>
+            <input type="text" class="form-control" id="nombreMunicipio" placeholder="">
+        </div>
+        <div class="col-md-6">
+            <label for="columnaComportamiento" class="form-label">Comportamiento</label>
+            <select id="columnaComportamiento" class="form-select">
+                <option selected>Columna para comportamiento</option>
+                {% for columna in columns %}
+                <option value={{columna}}>{{columna}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="nombreComportamiento" class="form-label">Nombre del Comportamiento</label>
+            <input type="text" class="form-control" id="nombreComportamiento" placeholder="">
+        </div>
+        <div class="col-md-6">
+            <label for="columnaClasificacion" class="form-label">Clasificacion</label>
+            <select id="columnaClasificacion" class="form-select">
+                <option selected>Columna para clasificacion</option>
+                {% for columna in columns %}
+                <option value={{columna}}>{{columna}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="nombreClasificacion" class="form-label">Nombre de la Clasificacion</label>
+            <input type="text" class="form-control" id="nombreClasificacion" placeholder="">
+        </div>
+        <div class="col-md-6">
+            <label for="columnaInfectados" class="form-label">Infectados</label>
+            <select id="columnaInfectados" class="form-select">
+                <option selected>Columna para infectados</option>
+                {% for columna in columns %}
+                <option value={{columna}}>{{columna}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="inputPrediccion" class="form-label">Dia a predecir</label>
+            <input type="date" class="form-control" id="inputPrediccion" value={{ today }}>
+        </div>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Calcular</button>
+        </div>
+    </form>
+</div>
 {% endblock %}
