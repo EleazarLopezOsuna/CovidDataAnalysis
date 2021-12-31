@@ -1,10 +1,13 @@
 #python -m flask run --reload --debugger
+import os
 from flask import Flask, redirect, url_for, render_template, request
 from datetime import date
+import pandas as pd
 
 app = Flask(__name__)
 
-columnas = ['Columna1', 'Columna2', 'Columna3']
+headers = []
+data = []
 
 tendencias = {
     "Infección por Covid-19 en un País": "trendsCovidPerCountry",
@@ -24,7 +27,7 @@ def trendsVaccinatedPerCountry():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/trends/dailyInfectedPerCountry")
@@ -38,7 +41,7 @@ def trendsDailyInfectedPerCountry():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/trends/covidPerCountry")
@@ -52,7 +55,7 @@ def trendsCovidPerCountry():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/trends/confirmedPerState")
@@ -66,7 +69,7 @@ def trendsConfirmedPerState():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 tasas = {
@@ -86,7 +89,7 @@ def ratesCasosActivosMuertesContinente():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/rates/mortalidadPais")
@@ -100,7 +103,7 @@ def ratesMortalidadPais():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/rates/crecimientoCasosNuevosTasaMuerte")
@@ -114,7 +117,7 @@ def ratesCrecimientoCasosNuevosTasaMuerte():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 predicciones = {
@@ -138,7 +141,7 @@ def predictionInfectadosPais():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/predictions/mortalidadDepartamento")
@@ -152,7 +155,7 @@ def predictionMortalidadDepartamento():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/predictions/mortalidadPais")
@@ -166,7 +169,7 @@ def predictionMortalidadPais():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/predictions/casosPaisYear")
@@ -180,7 +183,7 @@ def predictionCasosPaisYear():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/predictions/muertesUltimoDiaPrimerYearPais")
@@ -194,7 +197,7 @@ def predictionMuertesUltimoDiaPrimerYearPais():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/predictions/casosConfirmadosDia")
@@ -208,7 +211,7 @@ def predictionCasosConfirmadosDia():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/predictions/casosMuertesGlobal")
@@ -222,7 +225,7 @@ def predictionCasosMuertesGlobal():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 analisis = {
@@ -242,7 +245,7 @@ def analysisNumeroMuertesPais():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/analysis/comparacionVacunacionPaises")
@@ -256,7 +259,7 @@ def analysisComparacionVacunacionPaises():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/analysis/comparacionPaisesContinentes")
@@ -270,7 +273,7 @@ def analysisComparacionPaisesContinentes():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 porcentajes = {
@@ -289,7 +292,7 @@ def porcentagesHombresInfectadosPais():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/percentages/muertesCasosPaisRegionContinente")
@@ -303,7 +306,7 @@ def porcentagesMuertesCasosPaisRegionContinente():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 muertes = {
@@ -322,7 +325,7 @@ def deathsPromedioCasosEdad():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/deaths/regionPais")
@@ -336,7 +339,7 @@ def deathsRegionPais():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 otros = {
@@ -357,7 +360,7 @@ def othersIndiceProgresionPandemia():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/others/comportamientoClasificacionInfectadosMunicipioPais")
@@ -371,7 +374,7 @@ def othersComportamientoClasificacionInfectadosMunicipioPais():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/others/factoresMuertesPais")
@@ -385,7 +388,7 @@ def othersFactoresMuertesPais():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/others/comparacionCasosDetectadosNumeroPruebas")
@@ -399,11 +402,36 @@ def othersComparacionCasosDetectadosNumeroPruebas():
         rates = tasas,
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
-        columns = columnas
+        columns = headers
     )
 
 @app.route("/")
 def home():
+    return render_template(
+        'index.html',
+        analysis = analisis,
+        deaths = muertes,
+        others = otros,
+        percentages = porcentajes,
+        predictions = predicciones,
+        rates = tasas,
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d")
+    )
+
+@app.route("/loadData", methods=['GET', 'POST'])
+def loadData():
+    if request.method == 'POST':
+        file = request.files['upload']
+        file_ext = os.path.splitext(file.filename)[1]
+        if (file_ext == '.csv'):
+            data = pd.read_csv(file)
+            for col_name in data.columns: 
+                headers.append(col_name)
+        elif (file_ext == '.json'):
+            print('Is json')
+        elif (file_ext in ['.xls', '.xlsx']):
+            print('Is excel')
     return render_template(
         'index.html',
         analysis = analisis,
