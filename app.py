@@ -3,11 +3,13 @@ import os
 from flask import Flask, redirect, url_for, render_template, request
 from datetime import date
 import pandas as pd
+from dataAnalysis.firstItem import firstItem
 
 app = Flask(__name__)
 
 headers = []
 data = []
+resultados = {}
 
 tendencias = {
     "Infección por Covid-19 en un País": "trendsCovidPerCountry",
@@ -425,7 +427,9 @@ def loadData():
         file = request.files['upload']
         file_ext = os.path.splitext(file.filename)[1]
         if (file_ext == '.csv'):
+            global data
             data = pd.read_csv(file)
+            headers.clear()
             for col_name in data.columns: 
                 headers.append(col_name)
         elif (file_ext == '.json'):
@@ -434,6 +438,34 @@ def loadData():
             print('Is excel')
     return render_template(
         'index.html',
+        analysis = analisis,
+        deaths = muertes,
+        others = otros,
+        percentages = porcentajes,
+        predictions = predicciones,
+        rates = tasas,
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d")
+    )
+
+@app.route("/firstItemAnalysis", methods=['GET', 'POST'])
+def firstItemAnalysis():
+    global data
+    analysis1 = firstItem(
+        request.form['columnaContinente'],
+        request.form['nombreContinente'],
+        request.form['columnaPais'],
+        request.form['nombrePais'],
+        request.form['columnaInfectados'],
+        request.form['columnaDias'],
+        request.form['inputPrediccion'],
+        data
+    )
+    analysis1.dataFilter()
+    analysis1.analysis()
+    return render_template(
+        'report.html',
+        results = resultados,
         analysis = analisis,
         deaths = muertes,
         others = otros,

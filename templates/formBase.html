@@ -1,6 +1,6 @@
 <div class="col-12">
     <label for="columnaDias" class="form-label">Dias</label>
-    <select id="columnaDias" class="form-select">
+    <select id="columnaDias" name="columnaDias" class="form-select">
         <option selected>Columna para dias</option>
         {% for columna in columns %}
         <option value={{columna}}>{{columna}}</option>
@@ -9,7 +9,7 @@
 </div>
 <div class="col-md-6">
     <label for="columnaContinente" class="form-label">Continente</label>
-    <select id="columnaContinente" class="form-select">
+    <select id="columnaContinente" class="form-select" name="columnaContinente">
         <option selected>Columna para continente</option>
         {% for columna in columns %}
         <option value={{columna}}>{{columna}}</option>
@@ -18,11 +18,11 @@
 </div>
 <div class="col-md-6">
     <label for="nombreContinente" class="form-label">Nombre del Continente</label>
-    <input type="text" class="form-control" id="nombreContinente" placeholder="Asia">
+    <input type="text" class="form-control" id="nombreContinente" name="nombreContinente" placeholder="Asia">
 </div>
 <div class="col-md-6">
     <label for="columnaPais" class="form-label">Pais</label>
-    <select id="columnaPais" class="form-select">
+    <select id="columnaPais" name="columnaPais" class="form-select">
         <option selected>Columna para pais</option>
         {% for columna in columns %}
         <option value={{columna}}>{{columna}}</option>
@@ -31,5 +31,5 @@
 </div>
 <div class="col-md-6">
     <label for="nombrePais" class="form-label">Nombre del Pais</label>
-    <input type="text" class="form-control" id="nombrePais" placeholder="Afganistan">
+    <input type="text" class="form-control" id="nombrePais" name="nombrePais" placeholder="Afganistan">
 </div>
