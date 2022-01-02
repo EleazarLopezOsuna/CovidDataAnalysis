@@ -1,9 +1,57 @@
 {% extends "base.html" %}
 {% block title %}Coronavirus Data Analysis{% endblock %}
 {% block content %}
-<div class="container-fluid">
-    <h1>
-        Aca tiene que ir el reporte xd
-    </h1>
+<div class="container">
+    <div class="" id="reportPage">
+        <canvas id="lineChart" width="600" height="350"></canvas>
+    </div>
+    <button onclick="saveAsPDF();" class="btn btn-secondary">Guardar como PDF</button>
 </div>
+<script>
+    var ctx = document.getElementById("lineChart").getContext("2d");
+    var analysisResult = {{ analysisResult| tojson }}
+    var label = analysisResult['labels']
+    var setValue = analysisResult['setValues']
+    var predictedValue = analysisResult['predictedValues']
+    var graphName = analysisResult['graphName']
+    var lineChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: label,
+            datasets: [
+                {
+                    label: 'Real Value',
+                    data: setValue,
+                    borderColor: "",
+                    showLine: false
+                }, {
+                    label: 'Predicted Value',
+                    data: predictedValue,
+                    borderColor: "rgb(32, 150, 80)",
+                    lineTension: 0.6
+                }
+            ]
+        },
+        options: {
+            plugins: {
+                title: {
+                    display: true,
+                    text: graphName
+                }
+            },
+            responsive: false
+        }
+    });
+
+    function saveAsPDF() {
+        html2canvas(document.getElementById("reportPage"), {
+            onrendered: function (canvas) {
+                var img = canvas.toDataURL();
+                var doc = new jsPDF();
+                doc.addImage(img, 30, 10);
+                doc.save('firstItemReport.pdf');
+            }
+        });
+    }
+</script>
 {% endblock %}

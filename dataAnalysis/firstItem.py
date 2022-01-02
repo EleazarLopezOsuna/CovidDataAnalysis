@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 from sklearn import linear_model
 from sklearn.metrics import mean_squared_error, r2_score
-import matplotlib.pyplot as plt
 from datetime import datetime
+import json
 
 class firstItem():
 
@@ -24,7 +24,6 @@ class firstItem():
         if(self.countryColumn != ''):
             isCountry = self.data[self.countryColumn] == self.countryName
             self.data = self.data[isCountry]
-        print(self.data)
 
     def analysis(self):
         transformedDate = []
@@ -47,10 +46,54 @@ class firstItem():
         regr = linear_model.LinearRegression()
         regr.fit(x, y)
         pred = regr.predict(x)
-        plt.scatter(x, y, color='black')
-        plt.plot(x, pred, color='blue')
-        print('Prediccion ', regr.predict([[xToPredict]]))
-        print('Error: ', mean_squared_error(y, pred))
-        print('Coeficiente: ', regr.coef_)
-        print('Determinacion: ', r2_score(y, pred))
-        plt.show()
+        prediction = regr.predict([[xToPredict]])
+        mse = mean_squared_error(y, pred)
+        coef = regr.coef_
+        r2 = r2_score(y, pred)
+        labels = []
+        for label in x:
+            dt_obj = datetime.fromtimestamp(label[0]).strftime('%d-%m-%y')
+            labels.append(dt_obj)
+        setValues = []
+        for value in y:
+            setValues.append(value)
+        predictedValues = []
+        for value in pred:
+            predictedValues.append(value)
+        jsonString = self.generateJSON(labels, setValues, predictedValues)
+        return jsonString
+
+    def generateJSON(self, labels, setValues, predictedValues):
+        labelsOutput = '"labels": ['
+        contador = 0
+        for label in labels:
+            if contador == 0:
+                labelsOutput += '"' + str(label) + '"'
+            else:
+                labelsOutput += ', "' + str(label) + '"'
+            contador += 1
+        labelsOutput += '], '
+        setValuesOutput = '"setValues": ['
+        contador = 0
+        for value in setValues:
+            if contador == 0:
+                setValuesOutput += '"' + str(value) + '"'
+            else:
+                setValuesOutput += ', "' + str(value) + '"'
+            contador += 1
+        setValuesOutput += '], '
+        predictedValuesOutput = '"predictedValues": ['
+        contador = 0
+        for value in predictedValues:
+            if contador == 0:
+                predictedValuesOutput += '"' + str(value) + '"'
+            else:
+                predictedValuesOutput += ', "' + str(value) + '"'
+            contador += 1
+        predictedValuesOutput += '], '
+        graphName = '"graphName": "Tendencia de la infeccion por Covid-19 para ' + self.countryName + '" '
+        output = '{' + labelsOutput + setValuesOutput + predictedValuesOutput + graphName + '}'
+        return json.loads(output)
+
+    def generateConclution(self, formatedDate, prediction, mse, r2, coef):
+        dt_obj = datetime.fromtimestamp(formatedDate).strftime('%d-%m-%y')

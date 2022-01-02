@@ -2,8 +2,11 @@
 import os
 from flask import Flask, redirect, url_for, render_template, request
 from datetime import date
+from flask.helpers import make_response
 import pandas as pd
 from dataAnalysis.firstItem import firstItem
+import json
+import pdfkit
 
 app = Flask(__name__)
 
@@ -462,8 +465,8 @@ def firstItemAnalysis():
         data
     )
     analysis1.dataFilter()
-    analysis1.analysis()
-    return render_template(
+    resultados = analysis1.analysis()
+    res = render_template(
         'report.html',
         results = resultados,
         analysis = analisis,
@@ -473,5 +476,11 @@ def firstItemAnalysis():
         predictions = predicciones,
         rates = tasas,
         trends = tendencias,
-        today = date.today().strftime("%Y-%m-%d")
+        today = date.today().strftime("%Y-%m-%d"),
+        analysisResult = resultados
     )
+    pdf = pdfkit.from_string(res, False)
+    response = make_response(pdf)
+    response.headers['Content-type'] = 'application/pdf'
+    response.headers['Content-Disposition'] = 'inline;filename=ourput.pdf'
+    return res
