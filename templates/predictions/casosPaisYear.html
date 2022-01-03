@@ -2,11 +2,11 @@
 {% block title %}Coronavirus Data Analysis{% endblock %}
 {% block content %}
 <div class="container">
-    <form action="" class="row g-3">
+    <form action="../eighthItemAnalysis" class="row g-3" method="POST">
         {% include 'formBase.html'%}
         <div class="col-md-6">
             <label for="columnaInfectados" class="form-label">Infectados</label>
-            <select id="columnaInfectados" class="form-select">
+            <select id="columnaInfectados" name="columnaInfectados" class="form-select">
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
@@ -14,7 +14,7 @@
         </div>
         <div class="col-md-6">
             <label for="inputYear" class="form-label">Año a predecir</label>
-            <input type="number" class="form-control" id="inputYear">
+            <input type="number" class="form-control" id="inputYear" name="inputYear">
         </div>
         <div class="col-md-6">
             <button type="submit" class="btn btn-primary">Calcular</button>
