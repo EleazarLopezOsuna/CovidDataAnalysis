@@ -12,21 +12,9 @@
             {{ analysisResult['conclution']['rightColumn'].replace(' 00:00:00', '').replace('[','').replace(']', '') }}
         </p>
     </div>
-     <div class="col-12" id="reportPage1">
-        <canvas id="lineChart1" width="600" height="350"></canvas>
-    </div>
-    <div class="col-md-6">
-        <p>
-            {{ analysisResult2['conclution']['leftColumn'].replace(' 00:00:00', '').replace('[','').replace(']', '') }}
-        </p>
-    </div>
-    <div class="col-md-6">
-        <p>
-            {{ analysisResult2['conclution']['rightColumn'].replace(' 00:00:00', '').replace('[','').replace(']', '') }}
-        </p>
-    </div>
-    <div class="col-md-6" id="reportPage2">
-        <canvas id="lineChart2" width="600" height="350"></canvas>
+     <div id="reportPage">
+        <canvas id="lineChart1" width="600" height="350" class="col-md-6"></canvas>
+        <canvas id="lineChart2" width="600" height="350" class="col-md-6"></canvas>
     </div>
     <button onclick="saveAsPDF();" class="btn btn-secondary">Guardar como PDF</button>
 </div>
@@ -41,14 +29,12 @@
     var author = analysisResult['conclution']['header']
     var leftColumn = analysisResult['conclution']['leftColumn']
     var rightColumn = analysisResult['conclution']['rightColumn']
+
     var analysisResult2 = {{ analysisResult2 | tojson }}
     var label2 = analysisResult2['labels']
+    var graphName2 = analysisResult2['graphName']
     var setValue2 = analysisResult2['setValues']
     var predictedValue2 = analysisResult2['predictedValues']
-    var graphName2 = analysisResult2['graphName']
-    var author2 = analysisResult2['conclution']['header']
-    var leftColumn2 = analysisResult2['conclution']['leftColumn']
-    var rightColumn2 = analysisResult2['conclution']['rightColumn']
 
     var lineChart1 = new Chart(ctx1, {
         type: "line",
@@ -109,7 +95,7 @@
     });
 
     function saveAsPDF() {
-        html2canvas(document.getElementById("reportPage1"), {
+        html2canvas(document.getElementById("reportPage"), {
             onrendered: function (canvas) {
                 var img = canvas.toDataURL();
                 var doc = new jsPDF();
@@ -136,39 +122,9 @@
                 rightColumn = rightColumn.replaceAll(' 00:00:00', '').replaceAll('[','').replaceAll(']', '')
                 rightColumn = doc.splitTextToSize(rightColumn, 88)
                 doc.text(rightColumn, 109, 72)
-                doc.addImage(img, 25, 145);
-                doc.save('report1.pdf');
-            }
-        });
-        html2canvas(document.getElementById("reportPage1"), {
-            onrendered: function (canvas) {
-                var img2 = canvas.toDataURL();
-                var doc = new jsPDF();
-                graphName2 = doc.splitTextToSize(graphName2, 110)
-                doc.setFontSize(20);
-                doc.text(graphName2, 17, 15);
-                doc.setFontSize(11);
-                doc.text(author2[0], 77, 33);
-                doc.setFont('times', 'italic')
-                doc.text(author2[1], 83, 38)
-                doc.text(author2[2], 69, 43)
-                doc.setFont('times', 'normal')
-                doc.text(author2[3], 83, 48)
-                doc.text(author2[4], 80, 53)
-                doc.setFontSize(13)
-                doc.setFont('times', 'normal')
-                doc.text('I. Resultados', 41, 66)
-                doc.setFont('times', 'normal')
-                leftColumn2 = leftColumn2.replaceAll(' 00:00:00', '').replaceAll('[','').replaceAll(']', '')
-                leftColumn2 = doc.splitTextToSize(leftColumn2, 88)
-                doc.text(leftColumn2, 17, 72)
-                doc.text('II. Procedimiento', 129, 66)
-                doc.setFont('times', 'normal')
-                rightColumn2 = rightColumn2.replaceAll(' 00:00:00', '').replaceAll('[','').replaceAll(']', '')
-                rightColumn2 = doc.splitTextToSize(rightColumn2, 88)
-                doc.text(rightColumn2, 109, 72)
-                doc.addImage(img2, 25, 145);
-                doc.save('report2.pdf');
+                doc.addPage('a4', 'p')
+                doc.addImage(img, 25, 40);
+                doc.save('report.pdf');
             }
         });
     }
