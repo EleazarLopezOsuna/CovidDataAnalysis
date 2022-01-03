@@ -465,7 +465,7 @@ def firstItemAnalysis():
         data
     )
     analysis1.dataFilter()
-    resultados = analysis1.analysis()
+    #resultados = analysis1.analysis()
     res = render_template(
         'report.html',
         results = resultados,
