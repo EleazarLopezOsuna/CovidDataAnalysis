@@ -1,8 +1,18 @@
 {% extends "base.html" %}
 {% block title %}Coronavirus Data Analysis{% endblock %}
 {% block content %}
-<div class="container">
-    <div class="" id="reportPage">
+<div class="container-fluid row g-3">
+    <div class="col-md-6">
+        <p>
+            {{ analysisResult['conclution']['leftColumn'].replace(' 00:00:00', '').replace('[','').replace(']', '') }}
+        </p>
+    </div>
+    <div class="col-md-6">
+        <p>
+            {{ analysisResult['conclution']['rightColumn'].replace(' 00:00:00', '').replace('[','').replace(']', '') }}
+        </p>
+    </div>
+     <div class="col-md-6" id="reportPage">
         <canvas id="lineChart" width="600" height="350"></canvas>
     </div>
     <button onclick="saveAsPDF();" class="btn btn-secondary">Guardar como PDF</button>
@@ -14,6 +24,9 @@
     var setValue = analysisResult['setValues']
     var predictedValue = analysisResult['predictedValues']
     var graphName = analysisResult['graphName']
+    var author = analysisResult['conclution']['header']
+    var leftColumn = analysisResult['conclution']['leftColumn']
+    var rightColumn = analysisResult['conclution']['rightColumn']
     var lineChart = new Chart(ctx, {
         type: "line",
         data: {
@@ -48,7 +61,29 @@
             onrendered: function (canvas) {
                 var img = canvas.toDataURL();
                 var doc = new jsPDF();
-                doc.addImage(img, 30, 10);
+                doc.setFontSize(20);
+                doc.text(graphName, 17, 15);
+                doc.setFontSize(11);
+                doc.text(author[0], 77, 23);
+                doc.setFont('times', 'italic')
+                doc.text(author[1], 83, 28)
+                doc.text(author[2], 69, 33)
+                doc.setFont('times', 'normal')
+                doc.text(author[3], 83, 38)
+                doc.text(author[4], 80, 43)
+                doc.setFontSize(13)
+                doc.setFont('times', 'normal')
+                doc.text('I. Resultados', 41, 56)
+                doc.setFont('times', 'normal')
+                leftColumn = leftColumn.replaceAll(' 00:00:00', '').replaceAll('[','').replaceAll(']', '')
+                leftColumn = doc.splitTextToSize(leftColumn, 78)
+                doc.text(leftColumn, 17, 62)
+                doc.text('II. Procedimiento', 129, 56)
+                doc.setFont('times', 'normal')
+                rightColumn = rightColumn.replaceAll(' 00:00:00', '').replaceAll('[','').replaceAll(']', '')
+                rightColumn = doc.splitTextToSize(rightColumn, 78)
+                doc.text(rightColumn, 109, 62)
+                doc.addImage(img, 25, 135);
                 doc.save('firstItemReport.pdf');
             }
         });
