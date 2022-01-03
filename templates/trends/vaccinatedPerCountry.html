@@ -2,11 +2,11 @@
 {% block title %}Coronavirus Data Analysis{% endblock %}
 {% block content %}
 <div class="container">
-    <form action="" class="row g-3">
+    <form action="../ninthItemAnalysis" class="row g-3" method="POST">
         {% include 'formBase.html'%}
         <div class="col-md-6">
             <label for="columnaVacunados" class="form-label">Vacunados</label>
-            <select id="columnaVacunados" class="form-select">
+            <select id="columnaVacunados" name="columnaVacunados" class="form-select">
                 <option selected>Columna para vacunados</option>
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
@@ -15,7 +15,7 @@
         </div>
         <div class="col-md-6">
             <label for="inputPrediccion" class="form-label">Dia a predecir</label>
-            <input type="date" class="form-control" id="inputPrediccion" value={{ today }}>
+            <input type="date" class="form-control" id="inputPrediccion" name="inputPrediccion" value={{ today }}>
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-primary">Calcular</button>
