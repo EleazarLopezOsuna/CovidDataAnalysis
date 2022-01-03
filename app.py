@@ -464,7 +464,7 @@ def firstItemAnalysis():
         request.form['inputPrediccion'],
         data
     )
-    analysis1.dataFilter()
+    #analysis1.dataFilter()
     #resultados = analysis1.analysis()
     res = render_template(
         'index.html',
