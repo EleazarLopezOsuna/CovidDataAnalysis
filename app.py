@@ -12,6 +12,7 @@ from dataAnalysis.fifteenthItem import fifteenthItem
 from dataAnalysis.secondItem import secondItem
 from dataAnalysis.fourthItem import fourthItem
 from dataAnalysis.twentyFifthItem import twentyFifthItem
+from dataAnalysis.twentyFirstItem import twentyFirstItem
 
 app = Flask(__name__)
 
@@ -697,6 +698,34 @@ def twentyFifthItemAnalysis():
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d"),
         analysisResult = resultados
+    )
+    return res
+
+@app.route("/twentyFirstItemAnalysis", methods=['GET', 'POST'])
+def twentyFirstItemAnalysis():
+    global data
+    analysis1 = twentyFirstItem(
+        request.form['columnaInfectados'],
+        request.form['columnaMuertes'],
+        request.form['columnaDias'],
+        request.form['inputPrediccion'],
+        data
+    )
+    resultados = analysis1.analysis1()
+    resultados2 = analysis1.analysis2()
+    res = render_template(
+        'dualReport.html',
+        results = resultados,
+        analysis = analisis,
+        deaths = muertes,
+        others = otros,
+        percentages = porcentajes,
+        predictions = predicciones,
+        rates = tasas,
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        analysisResult = resultados,
+        analysisResult2 = resultados2
     )
     return res
 
