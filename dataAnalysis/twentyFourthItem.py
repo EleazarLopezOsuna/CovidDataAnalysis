@@ -4,6 +4,7 @@ from sklearn import linear_model
 from sklearn.metrics import mean_squared_error, r2_score
 from datetime import datetime
 import json
+import math
 
 class twentyFourthItem():
 
@@ -43,7 +44,7 @@ class twentyFourthItem():
         regr.fit(x, y)
         pred1 = regr.predict(x)
         prediction1 = regr.predict([[xToPredict]])
-        mse1 = mean_squared_error(y, pred1)
+        mse1 = math.sqrt(mean_squared_error(y, pred1))
         coef1 = regr.coef_
         r21 = r2_score(y, pred1)
 
@@ -59,7 +60,7 @@ class twentyFourthItem():
         regr.fit(x, y)
         pred2 = regr.predict(x)
         prediction2 = regr.predict([[xToPredict]])
-        mse2 = mean_squared_error(y, pred2)
+        mse2 = math.sqrt(mean_squared_error(y, pred2))
         coef2 = regr.coef_
         r22 = r2_score(y, pred2)
 
