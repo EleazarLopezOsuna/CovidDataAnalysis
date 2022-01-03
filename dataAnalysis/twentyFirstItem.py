@@ -127,8 +127,12 @@ class twentyFirstItem():
         rightColumn += 'y los datos proporcionados, se creo un modelo de regresion lineal el cual es capaz de realizar predicciones '
         rightColumn += 'sobre el comportamiento de los muertos en el mundo. El modelo tiene un coeficiente de determinacion de '
         rightColumn += str(r22) + ' lo cual indica que '
-        rightColumn += 'el modelo esta ajustado de manera correcta." ' if(r22 > 0.7) else 'el modelo no esta ajustado de la mejor manera."'
-        output += header + leftColumn + rightColumn + '}'
+        rightColumn += 'el modelo esta ajustado de manera correcta.", ' if(r22 > 0.7) else 'el modelo no esta ajustado de la mejor manera.", '
+        bottomColumn = '"bottomColumn": "'
+        bottomColumn += '   Conforme a la informacion presentada en los puntos anteriores, se puede concluir que para la fecha ' + str(formatedDate)
+        bottomColumn += ' se espera que la proporcion entre casos y muertes sea de ' + str(prediction1/prediction2) + ' lo que significa que por cada '
+        bottomColumn += 'caso se tendran ' + str(prediction1/prediction2) + ' muertes."'
+        output += header + leftColumn + rightColumn + bottomColumn + '}'
         return output
 
     def analysis2(self):

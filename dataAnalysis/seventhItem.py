@@ -29,6 +29,7 @@ class seventhItem():
         transformedDate = []
         for date in self.data[self.dayColumn]:
             formatedDate = datetime.now()
+            print(date)
             try:
                 formatedDate = datetime.strptime(date, '%d/%m/%Y')
             except:
