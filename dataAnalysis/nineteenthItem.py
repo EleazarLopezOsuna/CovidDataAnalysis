@@ -49,6 +49,7 @@ class nineteenthItem():
         prediction = regr.predict([[xToPredict]])
         mse = math.sqrt(mean_squared_error(y, pred))
         coef = regr.coef_
+        intercept = regr.intercept_
         r2 = r2_score(y, pred)
         labels = []
         for label in x:
@@ -60,10 +61,10 @@ class nineteenthItem():
         predictedValues = []
         for value in pred:
             predictedValues.append(value)
-        jsonString = self.generateJSON(labels, setValues, predictedValues, prediction, mse, r2, coef)
+        jsonString = self.generateJSON(labels, setValues, predictedValues, prediction, mse, r2, coef, intercept)
         return jsonString
 
-    def generateJSON(self, labels, setValues, predictedValues, prediction, mse, r2, coef):
+    def generateJSON(self, labels, setValues, predictedValues, prediction, mse, r2, coef, intercept):
         labelsOutput = '"labels": ['
         contador = 0
         for label in labels:
@@ -92,11 +93,11 @@ class nineteenthItem():
             contador += 1
         predictedValuesOutput += '], '
         graphName = '"graphName": "Predicción de muertes en el último día del primer año de infecciones en ' + self.countryName + '", '
-        conclutionOutput = self.generateConclution(prediction, mse, r2, coef)
+        conclutionOutput = self.generateConclution(prediction, mse, r2, coef, intercept)
         output = '{' + labelsOutput + setValuesOutput + predictedValuesOutput + graphName + conclutionOutput + '}'
         return json.loads(output)
 
-    def generateConclution(self, prediction, mse, r2, coef):
+    def generateConclution(self, prediction, mse, r2, coef, intercept):
         output = '"conclution": {'
         header = '"header": ["Eleazar Jared Lopez Osuna", "Facultad de Ingenieria", "Universidad de San Carlos de Guatemala", "Guatemala, Guatemala", "eleazarjlopezo@gmail.com"],'
         leftColumn = '"leftColumn": "'
@@ -108,6 +109,7 @@ class nineteenthItem():
         rightColumn += 'y los datos proporcionados, se creo un modelo de regresion lineal el cual es capaz de realizar predicciones '
         rightColumn += 'sobre el comportamiento de los muertos en ' + str(self.countryName) + '. El modelo tiene un coeficiente de determinacion de '
         rightColumn += str(r2) + ' lo cual indica que '
-        rightColumn += 'el modelo esta ajustado de manera correcta." ' if(r2 > 0.7) else 'el modelo no esta ajustado de la mejor manera."'
+        rightColumn += 'el modelo esta ajustado de manera correcta. ' if(r2 > 0.7) else 'el modelo no esta ajustado de la mejor manera. '
+        rightColumn += 'El modelo fue entrenado mediante la ecuacion y = ' + str(coef) + 'X +' + '(' + str(intercept) + ')"'
         output += header + leftColumn + rightColumn + '}'
         return output
