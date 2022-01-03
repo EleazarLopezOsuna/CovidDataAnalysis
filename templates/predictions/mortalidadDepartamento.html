@@ -2,11 +2,11 @@
 {% block title %}Coronavirus Data Analysis{% endblock %}
 {% block content %}
 <div class="container">
-    <form action="" class="row g-3">
+    <form action="../fourthItemAnalysis" class="row g-3" method="POST">
         {% include 'formBase.html'%}
         <div class="col-md-6">
             <label for="columnaDepartamento" class="form-label">Departamento</label>
-            <select id="columnaDepartamento" class="form-select">
+            <select id="columnaDepartamento" name="columnaDepartamento" class="form-select">
                 <option selected>Columna para departamento</option>
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
@@ -15,11 +15,11 @@
         </div>
         <div class="col-md-6">
             <label for="nombreDepartamento" class="form-label">Nombre del Departamento</label>
-            <input type="text" class="form-control" id="nombreDepartamento" placeholder="">
+            <input type="text" class="form-control" id="nombreDepartamento" name="nombreDepartamento" placeholder="Alta Verapaz">
         </div>
         <div class="col-md-6">
             <label for="columnaMuertos" class="form-label">Muertos</label>
-            <select id="columnaMuertos" class="form-select">
+            <select id="columnaMuertos" name="columnaMuertos" class="form-select">
                 <option selected>Columna para muertos</option>
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
@@ -28,7 +28,7 @@
         </div>
         <div class="col-md-6">
             <label for="inputPrediccion" class="form-label">Dia a predecir</label>
-            <input type="date" class="form-control" id="inputPrediccion" value={{ today }}>
+            <input type="date" class="form-control" id="inputPrediccion" name="inputPrediccion" value={{ today }}>
         </div>
         <div class="col-md-6">
             <button type="submit" class="btn btn-primary">Calcular</button>

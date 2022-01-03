@@ -5,16 +5,16 @@ from sklearn.metrics import mean_squared_error, r2_score
 from datetime import datetime
 import json
 
-class fifteenthItem():
+class fourthItem():
 
-    def __init__(self, continentColumn, continentName, countryColumn, countryName, stateColumn, stateName, casesColumn, dayColumn, predictionDay, data):
+    def __init__(self, continentColumn, continentName, countryColumn, countryName, stateColumn, stateName, deathsColumn, dayColumn, predictionDay, data):
         self.continentColumn = continentColumn
         self.continentName = continentName
         self.countryColumn = countryColumn
         self.countryName = countryName
         self.stateColumn = stateColumn
         self.stateName = stateName
-        self.casesColumn = casesColumn
+        self.deathsColumn = deathsColumn
         self.dayColumn = dayColumn
         self.predictionDate = predictionDay
         self.data = data
@@ -41,7 +41,7 @@ class fifteenthItem():
             transformedDate.append(int(datetime.timestamp(formatedDate)))
         self.data[self.dayColumn] = transformedDate
         x = np.asarray(self.data[self.dayColumn]).reshape(-1, 1)
-        y = self.data[self.casesColumn]
+        y = self.data[self.deathsColumn]
         formatedDate = datetime.now()
         try:
             formatedDate = datetime.strptime(self.predictionDate, '%d-%m-%Y')
@@ -96,7 +96,7 @@ class fifteenthItem():
                 predictedValuesOutput += ', "' + str(value) + '"'
             contador += 1
         predictedValuesOutput += '], '
-        graphName = '"graphName": "Tendencia de casos confirmados de Coronavirus en ' + self.stateName + ', ' + self.countryName + '", '
+        graphName = '"graphName": "Predicción de mortalidad por COVID en ' + self.stateName + ', ' + self.countryName + '", '
         conclutionOutput = self.generateConclution(formatedDate, prediction, mse, r2, coef)
         output = '{' + labelsOutput + setValuesOutput + predictedValuesOutput + graphName + conclutionOutput + '}'
         return json.loads(output)
@@ -108,10 +108,10 @@ class fifteenthItem():
         leftColumn += '   En base a la informacion proporcionada y aplicando metodos analiticos mediante el uso de software, se obtuvieron los '
         leftColumn += 'siguientes valores: \\nEl coeficiente de regresion lineal obtenido '
         leftColumn += 'fue de ' + str(coef) + '\\nEl error cuadratico medio (ECM) es de ' + str(mse)
-        leftColumn += '\\nLa prediccion obtenida para la fecha ' + str(formatedDate) + ' es de ' + str(prediction) + ' casos confirmados.", '
+        leftColumn += '\\nLa prediccion obtenida de la mortalidad para la fecha ' + str(formatedDate) + ' es de ' + str(prediction) + '.", '
         rightColumn = '"rightColumn": "   Mediante el uso de librerias tales como pandas, sklearn, scipy, numpy y flask '
         rightColumn += 'y los datos proporcionados, se creo un modelo de regresion lineal el cual es capaz de realizar predicciones '
-        rightColumn += 'sobre el comportamiento de los casos confirmados en ' + str(self.stateName) + ', ' + str(self.countryName) + '. El modelo tiene un coeficiente de determinacion de '
+        rightColumn += 'sobre el comportamiento de la taza de mortalidad en ' + str(self.stateName) + ', ' + str(self.countryName) + '. El modelo tiene un coeficiente de determinacion de '
         rightColumn += str(r2) + ' lo cual indica que '
         rightColumn += 'el modelo esta ajustado de manera correcta." ' if(r2 > 0.7) else 'el modelo no esta ajustado de la mejor manera."'
         output += header + leftColumn + rightColumn + '}'

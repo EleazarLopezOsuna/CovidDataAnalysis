@@ -9,6 +9,8 @@ from dataAnalysis.seventhItem import seventhItem
 from dataAnalysis.ninthItem import ninthItem
 from dataAnalysis.fifteenthItem import fifteenthItem
 from dataAnalysis.secondItem import secondItem
+from dataAnalysis.fourthItem import fourthItem
+
 app = Flask(__name__)
 
 headers = []
@@ -583,6 +585,38 @@ def secondItemAnalysis():
         request.form['columnaPais'],
         request.form['nombrePais'],
         request.form['columnaInfectados'],
+        request.form['columnaDias'],
+        request.form['inputPrediccion'],
+        data
+    )
+    analysis1.dataFilter()
+    resultados = analysis1.analysis()
+    res = render_template(
+        'report.html',
+        results = resultados,
+        analysis = analisis,
+        deaths = muertes,
+        others = otros,
+        percentages = porcentajes,
+        predictions = predicciones,
+        rates = tasas,
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        analysisResult = resultados
+    )
+    return res
+
+@app.route("/fourthItemAnalysis", methods=['GET', 'POST'])
+def fourthItemAnalysis():
+    global data
+    analysis1 = fourthItem(
+        request.form['columnaContinente'],
+        request.form['nombreContinente'],
+        request.form['columnaPais'],
+        request.form['nombrePais'],
+        request.form['columnaDepartamento'],
+        request.form['nombreDepartamento'],
+        request.form['columnaMuertos'],
         request.form['columnaDias'],
         request.form['inputPrediccion'],
         data
