@@ -7,16 +7,18 @@
         <div class="col-md-6">
             <label for="columnaEdad" class="form-label">Edad</label>
             <select id="columnaEdad" class="form-select">
-                <option selected>Columna para edad</option>
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
             </select>
         </div>
+        <div class="col-md-4">
+            <label for="nombreEdad" class="form-label">Nombre del Primer Continente</label>
+            <input type="text" class="form-control" id="nombreEdad" placeholder="Afganistan">
+        </div>
         <div class="col-md-6">
             <label for="columnaCasos" class="form-label">Casos</label>
             <select id="columnaCasos" class="form-select">
-                <option selected>Columna para casos</option>
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
@@ -25,7 +27,6 @@
         <div class="col-md-6">
             <label for="columnaMuertes" class="form-label">Muertes</label>
             <select id="columnaMuertes" class="form-select">
-                <option selected>Columna para muertes</option>
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}

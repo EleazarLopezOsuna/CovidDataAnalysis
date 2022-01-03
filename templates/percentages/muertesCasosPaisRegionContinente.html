@@ -4,10 +4,22 @@
 <div class="container">
     <form action="" class="row g-3">
         {% include 'formBase.html'%}
+        <div class="col-md-4">
+            <label for="columnaRegion" class="form-label">Region</label>
+            <select id="columnaRegion" class="form-select">
+                <option selected>Columna para Region</option>
+                {% for columna in columns %}
+                <option value={{columna}}>{{columna}}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="col-md-4">
+            <label for="nombreRegion" class="form-label">Nombre de Region</label>
+            <input type="text" class="form-control" id="nombreRegion" placeholder="Afganistan">
+        </div>
         <div class="col-md-6">
             <label for="columnaInfectados" class="form-label">Infectados</label>
             <select id="columnaInfectados" class="form-select">
-                <option selected>Columna para infectados</option>
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
@@ -16,7 +28,6 @@
         <div class="col-md-6">
             <label for="columnaMuertes" class="form-label">Muertes</label>
             <select id="columnaMuertes" class="form-select">
-                <option selected>Columna para muertes</option>
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}

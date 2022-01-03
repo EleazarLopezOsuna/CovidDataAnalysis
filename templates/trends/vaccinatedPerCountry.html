@@ -7,7 +7,6 @@
         <div class="col-md-6">
             <label for="columnaVacunados" class="form-label">Vacunados</label>
             <select id="columnaVacunados" name="columnaVacunados" class="form-select">
-                <option selected>Columna para vacunados</option>
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}

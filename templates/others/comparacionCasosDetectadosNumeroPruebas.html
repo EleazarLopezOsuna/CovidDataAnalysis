@@ -7,7 +7,6 @@
         <div class="col-md-6">
             <label for="columnaInfectados" class="form-label">Infectados</label>
             <select id="columnaInfectados" class="form-select">
-                <option selected>Columna para infectados</option>
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
@@ -16,7 +15,6 @@
         <div class="col-md-6">
             <label for="columnaPruebas" class="form-label">Pruebas</label>
             <select id="columnaPruebas" class="form-select">
-                <option selected>Columna para pruebas</option>
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
