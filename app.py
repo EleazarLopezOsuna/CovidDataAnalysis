@@ -484,3 +484,6 @@ def firstItemAnalysis():
     response.headers['Content-type'] = 'application/pdf'
     response.headers['Content-Disposition'] = 'inline;filename=ourput.pdf'
     return res
+
+if __name__ == "__main__":
+    app.run()
