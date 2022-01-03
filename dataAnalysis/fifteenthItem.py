@@ -20,13 +20,13 @@ class fifteenthItem():
         self.data = data
 
     def dataFilter(self):
-        if(self.continentColumn != ''):
+        if(self.continentColumn != '' and self.continentName != ''):
             isContinent = self.data[self.continentColumn] == self.continentName
             self.data = self.data[isContinent]
-        if(self.countryColumn != ''):
+        if(self.countryColumn != '' and self.countryName != ''):
             isCountry = self.data[self.countryColumn] == self.countryName
             self.data = self.data[isCountry]
-        if(self.stateColumn != ''):
+        if(self.stateColumn != '' and self.stateName != ''):
             isState = self.data[self.stateColumn] == self.stateName
             self.data = self.data[isState]
 
