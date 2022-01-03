@@ -5,7 +5,6 @@ from datetime import date
 from flask.helpers import make_response
 import pandas as pd
 from dataAnalysis.firstItem import firstItem
-
 app = Flask(__name__)
 
 headers = []
@@ -462,10 +461,11 @@ def firstItemAnalysis():
         request.form['inputPrediccion'],
         data
     )
-    #analysis1.dataFilter()
-    #resultados = analysis1.analysis()
+    analysis1.dataFilter()
+    resultados = analysis1.analysis()
     res = render_template(
-        'index.html',
+        'report.html',
+        results = resultados,
         analysis = analisis,
         deaths = muertes,
         others = otros,
@@ -473,7 +473,8 @@ def firstItemAnalysis():
         predictions = predicciones,
         rates = tasas,
         trends = tendencias,
-        today = date.today().strftime("%Y-%m-%d")
+        today = date.today().strftime("%Y-%m-%d"),
+        analysisResult = resultados
     )
     return res
 
