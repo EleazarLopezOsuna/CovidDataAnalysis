@@ -467,8 +467,7 @@ def firstItemAnalysis():
     analysis1.dataFilter()
     #resultados = analysis1.analysis()
     res = render_template(
-        'report.html',
-        results = resultados,
+        'index.html',
         analysis = analisis,
         deaths = muertes,
         others = otros,
@@ -476,8 +475,7 @@ def firstItemAnalysis():
         predictions = predicciones,
         rates = tasas,
         trends = tendencias,
-        today = date.today().strftime("%Y-%m-%d"),
-        analysisResult = resultados
+        today = date.today().strftime("%Y-%m-%d")
     )
     pdf = pdfkit.from_string(res, False)
     response = make_response(pdf)
