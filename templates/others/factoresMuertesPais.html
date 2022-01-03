@@ -5,7 +5,7 @@
     <form action="" class="row g-3">
         <div class="col-12">
             <label for="columnaDias" class="form-label">Dias</label>
-            <select id="columnaDias" class="form-select">
+            <select id="columnaDias" name="columnaDias" class="form-select">
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
@@ -13,7 +13,7 @@
         </div>
         <div class="col-md-6">
             <label for="columnaFactor" class="form-label">Factor de Muerte</label>
-            <select id="columnaFactor" class="form-select">
+            <select id="columnaFactor" name="columnaFactor" class="form-select">
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
@@ -21,7 +21,7 @@
         </div>
         <div class="col-md-6">
             <label for="columnaMuertes" class="form-label">Muertes</label>
-            <select id="columnaMuertes" class="form-select">
+            <select id="columnaMuertes" name="columnaMuertes" class="form-select">
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
@@ -29,7 +29,7 @@
         </div>
         <div class="col-12">
             <label for="inputPrediccion" class="form-label">Dia a predecir</label>
-            <input type="date" class="form-control" id="inputPrediccion" value={{ today }}>
+            <input type="date" class="form-control" id="inputPrediccion" name="inputPrediccion" value={{ today }}>
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-primary">Calcular</button>

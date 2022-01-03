@@ -2,18 +2,18 @@
 {% block title %}Coronavirus Data Analysis{% endblock %}
 {% block content %}
 <div class="container">
-    <form action="" class="row g-3">
+    <form action="../thirdItemAnalysis" class="row g-3" method="POST">
         <div class="col-md-6">
             <label for="columnaDias" class="form-label">Dias</label>
-            <select id="columnaDias" class="form-select">
+            <select id="columnaDias" name="columnaDias" class="form-select">
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
             </select>
         </div>
         <div class="col-md-6">
-            <label for="columnaInfectados" class="form-label">Pais</label>
-            <select id="columnaInfectados" class="form-select">
+            <label for="columnaInfectados" class="form-label">Infectados</label>
+            <select id="columnaInfectados" name="columnaInfectados" class="form-select">
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}

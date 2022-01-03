@@ -98,7 +98,7 @@ class eighthItem():
                 predictedValuesOutput += ', "' + str(value) + '"'
             contador += 1
         predictedValuesOutput += '], '
-        graphName = '"graphName": "Tendencia de la infeccion por Covid-19 para ' + self.countryName + '", '
+        graphName = '"graphName": "Predicción de casos de ' + self.countryName + ' para ' + self.predictionYear + '", '
         conclutionOutput = self.generateConclution(formatedDate, prediction1, prediction2, mse, r2, coef)
         output = '{' + labelsOutput + setValuesOutput + predictedValuesOutput + graphName + conclutionOutput + '}'
         return json.loads(output)

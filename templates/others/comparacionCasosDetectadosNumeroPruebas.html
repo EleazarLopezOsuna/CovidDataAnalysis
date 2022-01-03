@@ -6,7 +6,7 @@
         {% include 'formBase.html'%}
         <div class="col-md-6">
             <label for="columnaInfectados" class="form-label">Infectados</label>
-            <select id="columnaInfectados" class="form-select">
+            <select id="columnaInfectados" name="columnaInfectados" class="form-select">
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
@@ -14,7 +14,7 @@
         </div>
         <div class="col-md-6">
             <label for="columnaPruebas" class="form-label">Pruebas</label>
-            <select id="columnaPruebas" class="form-select">
+            <select id="columnaPruebas" name="columnaPruebas" class="form-select">
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
@@ -22,7 +22,7 @@
         </div>
         <div class="col-12">
             <label for="inputPrediccion" class="form-label">Dia a predecir</label>
-            <input type="date" class="form-control" id="inputPrediccion" value={{ today }}>
+            <input type="date" class="form-control" id="inputPrediccion" name="inputPrediccion" value={{ today }}>
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-primary">Calcular</button>
