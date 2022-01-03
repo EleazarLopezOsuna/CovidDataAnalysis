@@ -7,6 +7,7 @@ import pandas as pd
 from dataAnalysis.firstItem import firstItem
 from dataAnalysis.seventhItem import seventhItem
 from dataAnalysis.ninthItem import ninthItem
+from dataAnalysis.fifteenthItem import fifteenthItem
 app = Flask(__name__)
 
 headers = []
@@ -519,6 +520,38 @@ def ninthItemAnalysis():
         request.form['columnaPais'],
         request.form['nombrePais'],
         request.form['columnaVacunados'],
+        request.form['columnaDias'],
+        request.form['inputPrediccion'],
+        data
+    )
+    analysis1.dataFilter()
+    resultados = analysis1.analysis()
+    res = render_template(
+        'report.html',
+        results = resultados,
+        analysis = analisis,
+        deaths = muertes,
+        others = otros,
+        percentages = porcentajes,
+        predictions = predicciones,
+        rates = tasas,
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        analysisResult = resultados
+    )
+    return res
+
+@app.route("/fifteenthItemAnalysis", methods=['GET', 'POST'])
+def fifteenthItemAnalysis():
+    global data
+    analysis1 = fifteenthItem(
+        request.form['columnaContinente'],
+        request.form['nombreContinente'],
+        request.form['columnaPais'],
+        request.form['nombrePais'],
+        request.form['columnaDepartamento'],
+        request.form['nombreDepartamento'],
+        request.form['columnaCasos'],
         request.form['columnaDias'],
         request.form['inputPrediccion'],
         data
