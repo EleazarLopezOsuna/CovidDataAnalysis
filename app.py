@@ -5,8 +5,6 @@ from datetime import date
 from flask.helpers import make_response
 import pandas as pd
 from dataAnalysis.firstItem import firstItem
-import json
-import pdfkit
 
 app = Flask(__name__)
 
@@ -477,10 +475,6 @@ def firstItemAnalysis():
         trends = tendencias,
         today = date.today().strftime("%Y-%m-%d")
     )
-    pdf = pdfkit.from_string(res, False)
-    response = make_response(pdf)
-    response.headers['Content-type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = 'inline;filename=ourput.pdf'
     return res
 
 if __name__ == "__main__":
