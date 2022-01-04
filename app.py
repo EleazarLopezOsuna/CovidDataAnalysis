@@ -27,6 +27,7 @@ from dataAnalysis.eleventhItem import eleventhItem
 from dataAnalysis.thirteenthItem import thirteenthItem
 from dataAnalysis.sixthItem import sixthItem
 from dataAnalysis.tenthItem import tenthItem
+from dataAnalysis.twelfthItem import twelfthItem
 
 app = Flask(__name__)
 
@@ -1164,6 +1165,39 @@ def tenthItemAnalysis():
         request.form['nombrePais1'],
         request.form['nombrePais2'],
         request.form['columnaVacunados'],
+        request.form['columnaDias'],
+        data
+    )
+    analysis1.dataFilter()
+    resultados = analysis1.analysis1()
+    resultados2 = analysis1.analysis2()
+    res = render_template(
+        'dualReport.html',
+        results = resultados,
+        analysis = analisis,
+        deaths = muertes,
+        others = otros,
+        percentages = porcentajes,
+        predictions = predicciones,
+        rates = tasas,
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        analysisResult = resultados,
+        analysisResult2 = resultados2
+    )
+    return res
+
+@app.route("/twelfthItemAnalysis", methods=['GET', 'POST'])
+def twelfthItemAnalysis():
+    global data
+    analysis1 = twelfthItem(
+        request.form['columnaContinente'],
+        request.form['nombreContinente1'],
+        request.form['nombreContinente2'],
+        request.form['columnaPais'],
+        request.form['nombrePais1'],
+        request.form['nombrePais2'],
+        request.form['columnaMuertes'],
         request.form['columnaDias'],
         data
     )
