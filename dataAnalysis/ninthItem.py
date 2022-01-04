@@ -8,14 +8,13 @@ import math
 
 class ninthItem():
 
-    def __init__(self, continentColumn, continentName, countryColumn, countryName, vaccineColumn, dayColumn, predictionDay, data):
+    def __init__(self, continentColumn, continentName, countryColumn, countryName, vaccineColumn, dayColumn, data):
         self.continentColumn = continentColumn
         self.continentName = continentName
         self.countryColumn = countryColumn
         self.countryName = countryName
         self.vaccineColumn = vaccineColumn
         self.dayColumn = dayColumn
-        self.predictionDate = predictionDay
         self.data = data.dropna(subset=[continentColumn, countryColumn, vaccineColumn, dayColumn])
 
     def dataFilter(self):
@@ -46,16 +45,9 @@ class ninthItem():
         self.data = self.data.drop_duplicates(subset=[self.dayColumn], keep='last')
         x = np.asarray(self.data[self.dayColumn]).reshape(-1, 1)
         y = self.data[self.vaccineColumn]
-        formatedDate = datetime.now()
-        try:
-            formatedDate = datetime.strptime(self.predictionDate, '%d-%m-%Y')
-        except:
-            formatedDate = datetime.strptime(self.predictionDate, '%Y-%m-%d')
-        xToPredict = int(datetime.timestamp(formatedDate))
         regr = linear_model.LinearRegression()
         regr.fit(x, y)
         pred = regr.predict(x)
-        prediction = regr.predict([[xToPredict]])
         mse = math.sqrt(mean_squared_error(y, pred))
         coef = regr.coef_
         intercept = regr.intercept_
@@ -70,10 +62,10 @@ class ninthItem():
         predictedValues = []
         for value in pred:
             predictedValues.append(value)
-        jsonString = self.generateJSON(labels, setValues, predictedValues, formatedDate, prediction, mse, r2, coef, intercept)
+        jsonString = self.generateJSON(labels, setValues, predictedValues, mse, r2, coef, intercept)
         return jsonString
 
-    def generateJSON(self, labels, setValues, predictedValues, formatedDate, prediction, mse, r2, coef, intercept):
+    def generateJSON(self, labels, setValues, predictedValues, mse, r2, coef, intercept):
         labelsOutput = '"labels": ['
         contador = 0
         for label in labels:
@@ -102,18 +94,17 @@ class ninthItem():
             contador += 1
         predictedValuesOutput += '], '
         graphName = '"graphName": "Tendencia del numero de vacunados por día ' + self.countryName + '", '
-        conclutionOutput = self.generateConclution(formatedDate, prediction, mse, r2, coef, intercept)
+        conclutionOutput = self.generateConclution(mse, r2, coef, intercept)
         output = '{' + labelsOutput + setValuesOutput + predictedValuesOutput + graphName + conclutionOutput + '}'
         return json.loads(output)
 
-    def generateConclution(self, formatedDate, prediction, mse, r2, coef, intercept):
+    def generateConclution(self, mse, r2, coef, intercept):
         output = '"conclution": {'
         header = '"header": ["Eleazar Jared Lopez Osuna", "Facultad de Ingenieria", "Universidad de San Carlos de Guatemala", "Guatemala, Guatemala", "eleazarjlopezo@gmail.com"],'
         leftColumn = '"leftColumn": "'
         leftColumn += '   En base a la informacion proporcionada y aplicando metodos analiticos mediante el uso de software, se obtuvieron los '
         leftColumn += 'siguientes valores: \\nEl coeficiente de regresion lineal obtenido '
-        leftColumn += 'fue de ' + str(coef) + '\\nEl error cuadratico medio (ECM) es de ' + str(mse)
-        leftColumn += '\\nLa prediccion obtenida para la fecha ' + str(formatedDate) + ' es de ' + str(prediction) + ' vacunados.", '
+        leftColumn += 'fue de ' + str(coef) + '\\nEl error cuadratico medio (ECM) es de ' + str(mse) + '.", '
         rightColumn = '"rightColumn": "   Mediante el uso de librerias tales como pandas, sklearn, scipy, numpy y flask '
         rightColumn += 'y los datos proporcionados, se creo un modelo de regresion lineal el cual es capaz de realizar predicciones '
         rightColumn += 'sobre el comportamiento de los vacunados en ' + str(self.countryName) + '. El modelo tiene un coeficiente de determinacion de '

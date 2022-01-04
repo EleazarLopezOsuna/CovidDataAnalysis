@@ -607,7 +607,6 @@ def ninthItemAnalysis():
         request.form['nombrePais'],
         request.form['columnaVacunados'],
         request.form['columnaDias'],
-        request.form['inputPrediccion'],
         data
     )
     analysis1.dataFilter()
@@ -1120,7 +1119,6 @@ def eleventhItemAnalysis():
         request.form['columnaGenero'],
         request.form['columnaInfectados'],
         request.form['columnaDias'],
-        request.form['inputPrediccion'],
         data
     )
     analysis1.dataFilter()
