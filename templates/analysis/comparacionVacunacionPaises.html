@@ -2,10 +2,18 @@
 {% block title %}Coronavirus Data Analysis{% endblock %}
 {% block content %}
 <div class="container">
-    <form action="" class="row g-3">
+    <form action="../tenthItemAnalysis" class="row g-3" method="POST">
+        <div class="col-12">
+            <label for="columnaDias" class="form-label">Dias</label>
+            <select id="columnaDias" name="columnaDias" class="form-select">
+                {% for columna in columns %}
+                <option value={{columna}}>{{columna}}</option>
+                {% endfor %}
+            </select>
+        </div>
         <div class="col-md-6">
             <label for="columnaPais" class="form-label">Pais</label>
-            <select id="columnaPais" class="form-select">
+            <select id="columnaPais" name="columnaPais" class="form-select">
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
@@ -13,21 +21,21 @@
         </div>
         <div class="col-md-6">
             <label for="nombrePais1" class="form-label">Nombre del Primer Pais</label>
-            <input type="text" class="form-control" id="nombrePais1" placeholder="Afganistan">
+            <input type="text" class="form-control" id="" name="nombrePais1" placeholder="Afganistan">
         </div>
         <div class="col-md-6">
             <label for="nombrePais2" class="form-label">Nombre del Segundo Pais</label>
-            <input type="text" class="form-control" id="nombrePais2" placeholder="Afganistan">
+            <input type="text" class="form-control" id="nombrePais2" name="nombrePais2" placeholder="Afganistan">
         </div>
         <div class="col-md-6">
             <label for="columnaVacunados" class="form-label">Vacunados</label>
-            <select id="columnaVacunados" class="form-select">
+            <select id="columnaVacunados" name="columnaVacunados" class="form-select">
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
             </select>
         </div>
-        <div class="col-12">
+        <div class="col-md-6">
             <button type="submit" class="btn btn-primary">Calcular</button>
         </div>
     </form>
