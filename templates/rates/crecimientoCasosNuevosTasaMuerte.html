@@ -2,10 +2,10 @@
 {% block title %}Coronavirus Data Analysis{% endblock %}
 {% block content %}
 <div class="container">
-    <form action="" class="row g-3">
+    <form action="../twentiethItemAnalysis" class="row g-3" method="POST">
         <div class="col-12">
             <label for="columnaDias" class="form-label">Dias</label>
-            <select id="columnaDias" class="form-select">
+            <select id="columnaDias" name="columnaDias" class="form-select">
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
@@ -13,7 +13,7 @@
         </div>
         <div class="col-md-6">
             <label for="columnaInfectadosAcumulados" class="form-label">Infectados Acumulados</label>
-            <select id="columnaInfectadosAcumulados" class="form-select">
+            <select id="columnaInfectadosAcumulados" name="columnaInfectadosAcumulados" class="form-select">
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
@@ -21,7 +21,7 @@
         </div>
         <div class="col-md-6">
             <label for="columnaInfectadosDiarios" class="form-label">Infectados Diarios</label>
-            <select id="columnaInfectadosDiarios" class="form-select">
+            <select id="columnaInfectadosDiarios" name="columnaInfectadosDiarios" class="form-select">
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
@@ -29,7 +29,7 @@
         </div>
         <div class="col-md-6">
             <label for="columnaMuertes" class="form-label">Muertes</label>
-            <select id="columnaMuertes" class="form-select">
+            <select id="columnaMuertes" name="columnaMuertes" class="form-select">
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}
@@ -37,7 +37,7 @@
         </div>
         <div class="col-md-6">
             <label for="inputPrediccion" class="form-label">Dia a predecir</label>
-            <input type="date" class="form-control" id="inputPrediccion" value={{ today }}>
+            <input type="date" class="form-control" id="inputPrediccion" name="inputPrediccion" value={{ today }}>
         </div>
         <div class="col-12">
             <button type="submit" class="btn btn-primary">Calcular</button>

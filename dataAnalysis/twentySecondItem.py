@@ -94,7 +94,7 @@ class twentySecondItem():
                 predictedValuesOutput += ', "' + str(value) + '"'
             contador += 1
         predictedValuesOutput += '], '
-        graphName = '"graphName": "Tendencia de la infeccion por Covid-19 para ' + self.countryName + '", '
+        graphName = '"graphName": "Tasa de mortalidad por Covid-19 para ' + self.countryName + '", '
         conclutionOutput = self.generateConclution(formatedDate, prediction, mse, r2, coef, intercept)
         output = '{' + labelsOutput + setValuesOutput + predictedValuesOutput + graphName + conclutionOutput + '}'
         return json.loads(output)

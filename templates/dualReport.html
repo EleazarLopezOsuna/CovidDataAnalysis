@@ -123,11 +123,11 @@
                 rightColumn = rightColumn.replaceAll(' 00:00:00', '').replaceAll('[','').replaceAll(']', '')
                 rightColumn = doc.splitTextToSize(rightColumn, 88)
                 doc.text(rightColumn, 109, 72)
-                doc.text('III. Conclusion', 41, 195)
+                doc.text('III. Conclusion', 41, 215)
                 doc.setFont('times', 'normal')
                 bottomColumn = bottomColumn.replaceAll(' 00:00:00', '').replaceAll('[','').replaceAll(']', '')
                 bottomColumn = doc.splitTextToSize(bottomColumn, 176)
-                doc.text(bottomColumn, 17, 201)
+                doc.text(bottomColumn, 17, 221)
                 doc.addPage('a4', 'p')
                 doc.addImage(img, 25, 40);
                 doc.save('report.pdf');

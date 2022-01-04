@@ -6,14 +6,15 @@ from datetime import datetime
 import json
 import math
 
-class twentyFirstItem():
+class twentiethItem():
 
-    def __init__(self, infectedColumn, deathsColumn, dayColumn, predictionDay, data):
-        self.infectedColumn = infectedColumn
+    def __init__(self, daylyInfectedColumn, accumulatedInfectedColumn, deathsColumn, dayColumn, predictionDay, data):
+        self.daylyInfectedColumn = daylyInfectedColumn
+        self.accumulatedInfectedColumn = accumulatedInfectedColumn
         self.deathsColumn = deathsColumn
         self.dayColumn = dayColumn
         self.predictionDate = predictionDay
-        self.data = data.dropna(subset=[infectedColumn, deathsColumn, dayColumn])
+        self.data = data.dropna(subset=[daylyInfectedColumn, accumulatedInfectedColumn, deathsColumn, deathsColumn, dayColumn])
 
     def analysis1(self):
         transformedDate = []
@@ -26,10 +27,9 @@ class twentyFirstItem():
                 formatedDate = datetime.strptime(date, '%Y/%m/%d')
             transformedDate.append(int(datetime.timestamp(formatedDate)))
         self.data[self.dayColumn] = transformedDate
-        self.data = self.data.drop_duplicates(subset=[self.dayColumn], keep='last')
         x = np.asarray(self.data[self.dayColumn]).reshape(-1, 1)
         self.data[self.dayColumn] = savedDayColumn
-        y1 = self.data[self.infectedColumn]
+        y1 = self.data[self.daylyInfectedColumn] / self.data[self.accumulatedInfectedColumn]
         formatedDate = datetime.now()
         try:
             formatedDate = datetime.strptime(self.predictionDate, '%d-%m-%Y')
@@ -45,8 +45,7 @@ class twentyFirstItem():
         intercept1 = regr.intercept_
         r21 = r2_score(y1, pred1)
 
-
-        y2 = self.data[self.deathsColumn]
+        y2 = (self.data[self.daylyInfectedColumn] / self.data[self.accumulatedInfectedColumn]) / (self.data[self.deathsColumn] / self.data[self.accumulatedInfectedColumn])
         formatedDate = datetime.now()
         try:
             formatedDate = datetime.strptime(self.predictionDate, '%d-%m-%Y')
@@ -62,7 +61,6 @@ class twentyFirstItem():
         intercept2 = regr.intercept_
         r22 = r2_score(y2, pred2)
 
-
         labels = []
         for label in x:
             dt_obj = datetime.fromtimestamp(label[0]).strftime('%d-%m-%y')
@@ -73,10 +71,10 @@ class twentyFirstItem():
         predictedValues = []
         for value in pred1:
             predictedValues.append(value)
-        jsonString = self.generateJSON1(labels, setValues, predictedValues, formatedDate, prediction1, mse1, r21, coef1, prediction2, mse2, r22, coef2, intercept1, intercept2)
+        jsonString = self.generateJSON(labels, setValues, predictedValues, formatedDate, prediction1, mse1, r21, coef1, intercept1, prediction2, mse2, r22, coef2, intercept2)
         return jsonString
 
-    def generateJSON1(self, labels, setValues, predictedValues, formatedDate, prediction1, mse1, r21, coef1, prediction2, mse2, r22, coef2, intercept1, intercept2):
+    def generateJSON(self, labels, setValues, predictedValues, formatedDate, prediction1, mse1, r21, coef1, prediction2, mse2, r22, coef2, intercept1, intercept2):
         labelsOutput = '"labels": ['
         contador = 0
         for label in labels:
@@ -104,39 +102,43 @@ class twentyFirstItem():
                 predictedValuesOutput += ', "' + str(value) + '"'
             contador += 1
         predictedValuesOutput += '], '
-        graphName = '"graphName": "Predicciones de casos en todo el mundo", '
-        conclutionOutput = self.generateConclution1(formatedDate, prediction1, mse1, r21, coef1, prediction2, mse2, r22, coef2, intercept1, intercept2)
+        graphName = '"graphName": "Tasa de crecimiento de casos de COVID-19 en relación con nuevos casos diarios", '
+        conclutionOutput = self.generateConclution(formatedDate, prediction1, mse1, r21, coef1, prediction2, mse2, r22, coef2, intercept1, intercept2)
         output = '{' + labelsOutput + setValuesOutput + predictedValuesOutput + graphName + conclutionOutput + '}'
         return json.loads(output)
 
-    def generateConclution1(self, formatedDate, prediction1, mse1, r21, coef1, prediction2, mse2, r22, coef2, intercept1, intercept2):
+    def generateConclution(self, formatedDate, prediction1, mse1, r21, coef1, prediction2, mse2, r22, coef2, intercept1, intercept2):
         output = '"conclution": {'
         header = '"header": ["Eleazar Jared Lopez Osuna", "Facultad de Ingenieria", "Universidad de San Carlos de Guatemala", "Guatemala, Guatemala", "eleazarjlopezo@gmail.com"],'
         leftColumn = '"leftColumn": "'
         leftColumn += '   En base a la informacion proporcionada y aplicando metodos analiticos mediante el uso de software, se obtuvieron los '
         leftColumn += 'siguientes valores: \\nEl coeficiente de regresion lineal obtenido '
         leftColumn += 'fue de ' + str(np.round(coef1, 4)) + '\\nEl error cuadratico medio (ECM) es de ' + str(np.round(mse1, 4))
-        leftColumn += '\\nLa prediccion obtenida para la fecha ' + str(formatedDate) + ' es de ' + str(np.round(prediction1, 4)) + ' casos. '
-        leftColumn += '\\nEn base a la informacion proporcionada y aplicando metodos analiticos mediante el uso de software, se obtuvieron los '
+        leftColumn += '\\nLa tasa predicha para la fecha ' + str(formatedDate) + ' es de ' + str(np.round(prediction1, 4)) + ' lo que significa que '
+        leftColumn += 'los casos positivos crecen a razon de ' + str(np.round(prediction1, 4)) + ' conforme a los nuevos casos, estos datos fueron '
+        leftColumn += 'obtenido mediante la division (' + str(self.daylyInfectedColumn) + ' / ' + str(self.accumulatedInfectedColumn) + '). '
+        leftColumn += '\\n   En base a la informacion proporcionada y aplicando metodos analiticos mediante el uso de software, se obtuvieron los '
         leftColumn += 'siguientes valores: \\nEl coeficiente de regresion lineal obtenido '
         leftColumn += 'fue de ' + str(np.round(coef2, 4)) + '\\nEl error cuadratico medio (ECM) es de ' + str(np.round(mse2, 4))
-        leftColumn += '\\nLa prediccion obtenida para la fecha ' + str(formatedDate) + ' es de ' + str(np.round(prediction2, 4)) + ' muertos.", '
-        rightColumn = '"rightColumn": "   Mediante el uso de librerias tales como pandas, sklearn, scipy, numpy y flask '
+        leftColumn += '\\nLa tasa predicha para la fecha ' + str(formatedDate) + ' es de ' + str(np.round(prediction2, 4)) + ' lo que significa que '
+        leftColumn += 'los casos positivos crecen a razon de ' + str(np.round(prediction2, 4)) + ' conforme a la tasa de muertos, estos datos fueron '
+        leftColumn += 'obtenido mediante la division (' + str(self.daylyInfectedColumn) + ' / ' + str(self.accumulatedInfectedColumn) + ') / (' + str(self.deathsColumn) + ' / ' + str(self.accumulatedInfectedColumn) + ')).", '
+        rightColumn = '"rightColumn": "'
+        rightColumn += '  Mediante el uso de librerias tales como pandas, sklearn, scipy, numpy y flask '
         rightColumn += 'y los datos proporcionados, se creo un modelo de regresion lineal el cual es capaz de realizar predicciones '
-        rightColumn += 'sobre el comportamiento de los casos en todo el mundo. El modelo tiene un coeficiente de determinacion de '
+        rightColumn += 'sobre el comportamiento de la tasa de crecimiento de casos de covid. El modelo tiene un coeficiente de determinacion de '
         rightColumn += str(np.round(r21, 4)) + ' lo cual indica que '
         rightColumn += 'el modelo esta ajustado de manera correcta. ' if(r21 > 0.7) else 'el modelo no esta ajustado de la mejor manera. '
         rightColumn += 'El modelo fue entrenado mediante la ecuacion y = ' + str(np.round(coef1, 4)) + 'X +' + '(' + str(np.round(intercept1, 4)) + ')'
-        rightColumn += '\\nMediante el uso de librerias tales como pandas, sklearn, scipy, numpy y flask '
+        rightColumn += '  Mediante el uso de librerias tales como pandas, sklearn, scipy, numpy y flask '
         rightColumn += 'y los datos proporcionados, se creo un modelo de regresion lineal el cual es capaz de realizar predicciones '
-        rightColumn += 'sobre el comportamiento de los muertos en el mundo. El modelo tiene un coeficiente de determinacion de '
+        rightColumn += 'sobre el comportamiento de la tasa de crecimiento de casos de covid. El modelo tiene un coeficiente de determinacion de '
         rightColumn += str(np.round(r22, 4)) + ' lo cual indica que '
         rightColumn += 'el modelo esta ajustado de manera correcta. ' if(r22 > 0.7) else 'el modelo no esta ajustado de la mejor manera. '
         rightColumn += 'El modelo fue entrenado mediante la ecuacion y = ' + str(np.round(coef2, 4)) + 'X +' + '(' + str(np.round(intercept2, 4)) + ')", '
         bottomColumn = '"bottomColumn": "'
         bottomColumn += '   Conforme a la informacion presentada en los puntos anteriores, se puede concluir que para la fecha ' + str(formatedDate)
-        bottomColumn += ' se espera que la proporcion entre casos y muertes sea de ' + str(prediction2/prediction1) + ' lo que significa que por cada '
-        bottomColumn += 'caso se tendran ' + str(prediction2/prediction1) + ' muertes."'
+        bottomColumn += ' se espera que la proporcion entre casos nuevos y casos acumulados sea de ' + str(np.round(prediction1, 4)) + ' y la proporcion entre casos nuevos y muertes acumuladas sea de ' + str(np.round(prediction2, 4)) + '"'
         output += header + leftColumn + rightColumn + bottomColumn + '}'
         return output
 
@@ -152,7 +154,7 @@ class twentyFirstItem():
         self.data[self.dayColumn] = transformedDate
         self.data = self.data.drop_duplicates(subset=[self.dayColumn], keep='last')
         x = np.asarray(self.data[self.dayColumn]).reshape(-1, 1)
-        y = self.data[self.deathsColumn]
+        y = self.data[self.daylyInfectedColumn] / (self.data[self.deathsColumn] / self.data[self.accumulatedInfectedColumn])
         formatedDate = datetime.now()
         try:
             formatedDate = datetime.strptime(self.predictionDate, '%d-%m-%Y')
@@ -175,7 +177,7 @@ class twentyFirstItem():
         return jsonString
 
     def generateJSON2(self, labels, setValues, predictedValues):
-        graphName = '"graphName": "Predicciones de muertes en todo el mundo", '
+        graphName = '"graphName": "Tasa de crecimiento de casos de COVID-19 en relación con la tasa de muerte por COVID-19", '
         labelsOutput = '"labels": ['
         contador = 0
         for label in labels:
