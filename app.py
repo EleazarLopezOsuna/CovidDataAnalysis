@@ -992,7 +992,6 @@ def twentiethItemAnalysis():
         request.form['columnaInfectadosAcumulados'],
         request.form['columnaMuertes'],
         request.form['columnaDias'],
-        request.form['inputPrediccion'],
         data
     )
     resultados = analysis1.analysis1()
@@ -1022,7 +1021,6 @@ def seventeenthItemAnalysis():
         request.form['columnaInfectados'],
         request.form['columnaMuertes'],
         request.form['columnaDias'],
-        request.form['inputPrediccion'],
         data
     )
     analysis1.dataFilter()
@@ -1276,7 +1274,6 @@ def eighteenthItemAnalysis():
         request.form['columnaClasificacion'],
         request.form['columnaInfectados'],
         request.form['columnaDias'],
-        request.form['inputPrediccion'],
         data
     )
     analysis1.dataFilter()

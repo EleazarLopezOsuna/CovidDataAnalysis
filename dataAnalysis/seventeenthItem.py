@@ -8,20 +8,19 @@ import math
 
 class seventeenthItem():
 
-    def __init__(self, continentColumn, continentName, infectedColumn, deathsColumn, dayColumn, predictionDay, data):
+    def __init__(self, continentColumn, continentName, infectedColumn, deathsColumn, dayColumn, data):
         self.continentColumn = continentColumn
         self.continentName = continentName
         self.infectedColumn = infectedColumn
         self.deathsColumn = deathsColumn
         self.dayColumn = dayColumn
-        self.predictionDate = predictionDay
         self.data = data.dropna(subset=[continentColumn, infectedColumn, deathsColumn, dayColumn])
 
     def dataFilter(self):
         if(self.continentColumn != '' and self.continentName != ''):
             isContinent = self.data[self.continentColumn] == self.continentName
             self.data = self.data[isContinent]
-        isZero = self.data[self.infectedColumn] != 0
+        isZero = self.data[self.deathsColumn] != 0
         self.data = self.data[isZero]
 
     def analysis(self):
@@ -43,17 +42,10 @@ class seventeenthItem():
         self.data[self.dayColumn] = transformedDate
         self.data = self.data.drop_duplicates(subset=[self.dayColumn], keep='last')
         x = np.asarray(self.data[self.dayColumn]).reshape(-1, 1)
-        y = self.data[self.deathsColumn] / self.data[self.infectedColumn]
-        formatedDate = datetime.now()
-        try:
-            formatedDate = datetime.strptime(self.predictionDate, '%d-%m-%Y')
-        except:
-            formatedDate = datetime.strptime(self.predictionDate, '%Y-%m-%d')
-        xToPredict = int(datetime.timestamp(formatedDate))
+        y = self.data[self.infectedColumn] / self.data[self.deathsColumn]
         regr = linear_model.LinearRegression()
         regr.fit(x, y)
         pred = regr.predict(x)
-        prediction = regr.predict([[xToPredict]])
         mse = math.sqrt(mean_squared_error(y, pred))
         coef = regr.coef_
         intercept = regr.intercept_
@@ -68,10 +60,10 @@ class seventeenthItem():
         predictedValues = []
         for value in pred:
             predictedValues.append(value)
-        jsonString = self.generateJSON(labels, setValues, predictedValues, formatedDate, prediction, mse, r2, coef, intercept)
+        jsonString = self.generateJSON(labels, setValues, predictedValues, mse, r2, coef, intercept)
         return jsonString
 
-    def generateJSON(self, labels, setValues, predictedValues, formatedDate, prediction, mse, r2, coef, intercept):
+    def generateJSON(self, labels, setValues, predictedValues, mse, r2, coef, intercept):
         labelsOutput = '"labels": ['
         contador = 0
         for label in labels:
@@ -100,20 +92,18 @@ class seventeenthItem():
             contador += 1
         predictedValuesOutput += '], '
         graphName = '"graphName": "Tasa de comportamiento de casos activos en relación al numero de muertes en ' + self.continentName + '", '
-        conclutionOutput = self.generateConclution(formatedDate, prediction, mse, r2, coef, intercept)
+        conclutionOutput = self.generateConclution(mse, r2, coef, intercept)
         output = '{' + labelsOutput + setValuesOutput + predictedValuesOutput + graphName + conclutionOutput + '}'
         return json.loads(output)
 
-    def generateConclution(self, formatedDate, prediction, mse, r2, coef, intercept):
+    def generateConclution(self, mse, r2, coef, intercept):
         output = '"conclution": {'
         header = '"header": ["Eleazar Jared Lopez Osuna", "Facultad de Ingenieria", "Universidad de San Carlos de Guatemala", "Guatemala, Guatemala", "eleazarjlopezo@gmail.com"],'
         leftColumn = '"leftColumn": "'
         leftColumn += '   En base a la informacion proporcionada y aplicando metodos analiticos mediante el uso de software, se obtuvieron los '
         leftColumn += 'siguientes valores: \\nEl coeficiente de regresion lineal obtenido '
-        leftColumn += 'fue de ' + str(coef) + '\\nEl error cuadratico medio (ECM) es de ' + str(mse)
-        leftColumn += '\\nLa tasa predicha para la fecha ' + str(formatedDate) + ' es de ' + str(prediction) + ' lo que significa que '
-        leftColumn += 'por cada caso positivo hay ' + str(prediction) + ' muertos, estos datos fueron '
-        leftColumn += 'obtenido mediante la division (' + str(self.deathsColumn) + ' / ' + str(self.infectedColumn) + ').", '
+        leftColumn += 'fue de ' + str(coef) + '\\nEl error cuadratico medio (ECM) es de ' + str(mse) + ' , estos datos fueron '
+        leftColumn += 'obtenido mediante la division (' + str(self.infectedColumn) + ' / ' + str(self.deathsColumn) + ').", '
         rightColumn = '"rightColumn": "   Mediante el uso de librerias tales como pandas, sklearn, scipy, numpy y flask '
         rightColumn += 'y los datos proporcionados, se creo un modelo de regresion lineal el cual es capaz de realizar predicciones '
         rightColumn += 'sobre el comportamiento de la tasa en ' + str(self.continentName) + '. El modelo tiene un coeficiente de determinacion de '
