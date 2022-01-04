@@ -1088,7 +1088,6 @@ def fourteenthItemAnalysis():
         request.form['nombreRegion'],
         request.form['columnaMuertes'],
         request.form['columnaDias'],
-        request.form['inputPrediccion'],
         data
     )
     analysis1.dataFilter()
@@ -1150,7 +1149,6 @@ def thirteenthItemAnalysis():
         request.form['columnaCasos'],
         request.form['columnaMuertes'],
         request.form['columnaDias'],
-        request.form['inputPrediccion'],
         data
     )
     analysis1.dataFilter()

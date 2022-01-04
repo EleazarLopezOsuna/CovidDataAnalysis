@@ -8,7 +8,7 @@ import math
 
 class thirteenthItem():
 
-    def __init__(self, continentColumn, continentName, countryColumn, countryName, ageColumn, infectedColumn, deathsColumn, dayColumn, predictionDay, data):
+    def __init__(self, continentColumn, continentName, countryColumn, countryName, ageColumn, infectedColumn, deathsColumn, dayColumn, data):
         self.continentColumn = continentColumn
         self.continentName = continentName
         self.countryColumn = countryColumn
@@ -17,7 +17,6 @@ class thirteenthItem():
         self.infectedColumn = infectedColumn
         self.deathsColumn = deathsColumn
         self.dayColumn = dayColumn
-        self.predictionDate = predictionDay
         self.data = data.dropna(subset=[continentColumn, countryColumn, ageColumn, infectedColumn, deathsColumn, dayColumn])
 
     def dataFilter(self):
@@ -52,16 +51,9 @@ class thirteenthItem():
         x = np.asarray(self.data[self.dayColumn]).reshape(-1, 1)
         self.data[self.dayColumn] = savedDayColumn
         y1 = self.data[self.deathsColumn] / self.data[self.infectedColumn]
-        formatedDate = datetime.now()
-        try:
-            formatedDate = datetime.strptime(self.predictionDate, '%d-%m-%Y')
-        except:
-            formatedDate = datetime.strptime(self.predictionDate, '%Y-%m-%d')
-        xToPredict = int(datetime.timestamp(formatedDate))
         regr = linear_model.LinearRegression()
         regr.fit(x, y1)
         pred1 = regr.predict(x)
-        prediction1 = regr.predict([[xToPredict]])
         mse1 = math.sqrt(mean_squared_error(y1, pred1))
         coef1 = regr.coef_
         intercept1 = regr.intercept_
@@ -69,16 +61,9 @@ class thirteenthItem():
 
 
         y2 = self.data[self.ageColumn] / self.data[self.infectedColumn]
-        formatedDate = datetime.now()
-        try:
-            formatedDate = datetime.strptime(self.predictionDate, '%d-%m-%Y')
-        except:
-            formatedDate = datetime.strptime(self.predictionDate, '%Y-%m-%d')
-        xToPredict = int(datetime.timestamp(formatedDate))
         regr = linear_model.LinearRegression()
         regr.fit(x, y2)
         pred2 = regr.predict(x)
-        prediction2 = regr.predict([[xToPredict]])
         mse2 = math.sqrt(mean_squared_error(y2, pred2))
         coef2 = regr.coef_
         intercept2 = regr.intercept_
@@ -95,10 +80,10 @@ class thirteenthItem():
         predictedValues = []
         for value in pred1:
             predictedValues.append(value)
-        jsonString = self.generateJSON1(labels, setValues, predictedValues, formatedDate, prediction1, mse1, r21, coef1, prediction2, mse2, r22, coef2, intercept1, intercept2)
+        jsonString = self.generateJSON1(labels, setValues, predictedValues, mse1, r21, coef1, mse2, r22, coef2, intercept1, intercept2)
         return jsonString
 
-    def generateJSON1(self, labels, setValues, predictedValues, formatedDate, prediction1, mse1, r21, coef1, prediction2, mse2, r22, coef2, intercept1, intercept2):
+    def generateJSON1(self, labels, setValues, predictedValues, mse1, r21, coef1, mse2, r22, coef2, intercept1, intercept2):
         labelsOutput = '"labels": ['
         contador = 0
         for label in labels:
@@ -126,25 +111,21 @@ class thirteenthItem():
                 predictedValuesOutput += ', "' + str(value) + '"'
             contador += 1
         predictedValuesOutput += '], '
-        graphName = '"graphName": "Predicciones de casos en todo el mundo", '
-        conclutionOutput = self.generateConclution1(formatedDate, prediction1, mse1, r21, coef1, prediction2, mse2, r22, coef2, intercept1, intercept2)
+        graphName = '"graphName": "Muertes promedio por casos confirmados en ' + str(self.countryName) + '", '
+        conclutionOutput = self.generateConclution1(mse1, r21, coef1, mse2, r22, coef2, intercept1, intercept2)
         output = '{' + labelsOutput + setValuesOutput + predictedValuesOutput + graphName + conclutionOutput + '}'
         return json.loads(output)
 
-    def generateConclution1(self, formatedDate, prediction1, mse1, r21, coef1, prediction2, mse2, r22, coef2, intercept1, intercept2):
+    def generateConclution1(self, mse1, r21, coef1, mse2, r22, coef2, intercept1, intercept2):
         output = '"conclution": {'
         header = '"header": ["Eleazar Jared Lopez Osuna", "Facultad de Ingenieria", "Universidad de San Carlos de Guatemala", "Guatemala, Guatemala", "eleazarjlopezo@gmail.com"],'
         leftColumn = '"leftColumn": "'
         leftColumn += '   En base a la informacion proporcionada y aplicando metodos analiticos mediante el uso de software, se obtuvieron los '
         leftColumn += 'siguientes valores: \\nEl coeficiente de regresion lineal obtenido '
-        leftColumn += 'fue de ' + str(np.round(coef1, 4)) + '\\nEl error cuadratico medio (ECM) es de ' + str(np.round(mse1, 4))
-        leftColumn += '\\nLa prediccion obtenida para la fecha ' + str(formatedDate) + ' es de ' + str(np.round(prediction1, 4)) + ', lo que indica que '
-        leftColumn += 'por cada caso hay ' + str(np.round(prediction1, 4)) + ' muertes. '
+        leftColumn += 'fue de ' + str(np.round(coef1, 4)) + '\\nEl error cuadratico medio (ECM) es de ' + str(np.round(mse1, 4)) + '. '
         leftColumn += '\\nEn base a la informacion proporcionada y aplicando metodos analiticos mediante el uso de software, se obtuvieron los '
         leftColumn += 'siguientes valores: \\nEl coeficiente de regresion lineal obtenido '
-        leftColumn += 'fue de ' + str(np.round(coef2, 4)) + '\\nEl error cuadratico medio (ECM) es de ' + str(np.round(mse2, 4))
-        leftColumn += '\\nLa prediccion obtenida para la fecha ' + str(formatedDate) + ' es de ' + str(np.round(prediction2, 4)) + ', lo que indica que '
-        leftColumn += 'por cada caso hay ' + str(np.round(prediction1, 4)) + ' casos para las edades segun la columna ' + str(self.ageColumn) + '.", '
+        leftColumn += 'fue de ' + str(np.round(coef2, 4)) + '\\nEl error cuadratico medio (ECM) es de ' + str(np.round(mse2, 4)) + '.", '
         rightColumn = '"rightColumn": "   Mediante el uso de librerias tales como pandas, sklearn, scipy, numpy y flask '
         rightColumn += 'y los datos proporcionados, se creo un modelo de regresion lineal el cual es capaz de realizar predicciones '
         rightColumn += 'sobre el comportamiento de las muertes segun casos. El modelo tiene un coeficiente de determinacion de '
@@ -157,10 +138,7 @@ class thirteenthItem():
         rightColumn += str(np.round(r22, 4)) + ' lo cual indica que '
         rightColumn += 'el modelo esta ajustado de manera correcta. ' if(r22 > 0.7) else 'el modelo no esta ajustado de la mejor manera. '
         rightColumn += 'El modelo fue entrenado mediante la ecuacion y = ' + str(np.round(coef2, 4)) + 'X +' + '(' + str(np.round(intercept2, 4)) + ')", '
-        bottomColumn = '"bottomColumn": "'
-        bottomColumn += '   Conforme a la informacion presentada en los puntos anteriores, se puede concluir que para la fecha ' + str(formatedDate)
-        bottomColumn += ' se espera que la proporcion entre casos y muertes sea de ' + str(prediction2/prediction1) + ' lo que significa que por cada '
-        bottomColumn += 'caso se tendran ' + str(prediction2/prediction1) + ' muertes por cada caso segun la edad de la columna ' + str(self.ageColumn) + '."'
+        bottomColumn = '"bottomColumn": " "'
         output += header + leftColumn + rightColumn + bottomColumn + '}'
         return output
 
@@ -186,11 +164,6 @@ class thirteenthItem():
         self.data = self.data.drop_duplicates(subset=[self.dayColumn], keep='last')
         x = np.asarray(self.data[self.dayColumn]).reshape(-1, 1)
         y = self.data[self.ageColumn] / self.data[self.infectedColumn]
-        formatedDate = datetime.now()
-        try:
-            formatedDate = datetime.strptime(self.predictionDate, '%d-%m-%Y')
-        except:
-            formatedDate = datetime.strptime(self.predictionDate, '%Y-%m-%d')
         regr = linear_model.LinearRegression()
         regr.fit(x, y)
         pred = regr.predict(x)
@@ -208,7 +181,7 @@ class thirteenthItem():
         return jsonString
 
     def generateJSON2(self, labels, setValues, predictedValues):
-        graphName = '"graphName": "Predicciones de muertes en todo el mundo", '
+        graphName = '"graphName": "Muertes promedio por edad en ' + str(self.countryName) + '", '
         labelsOutput = '"labels": ['
         contador = 0
         for label in labels:
