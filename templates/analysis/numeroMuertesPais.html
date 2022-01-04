@@ -2,11 +2,11 @@
 {% block title %}Coronavirus Data Analysis{% endblock %}
 {% block content %}
 <div class="container">
-    <form action="" class="row g-3">
+    <form action="../sixthItemAnalysis" class="row g-3" method="POST">
         {% include 'formBase.html'%}
         <div class="col-12">
             <label for="columnaMuertos" class="form-label">Muertos</label>
-            <select id="columnaMuertos" class="form-select">
+            <select id="columnaMuertos" name="columnaMuertos" class="form-select">
                 {% for columna in columns %}
                 <option value={{columna}}>{{columna}}</option>
                 {% endfor %}

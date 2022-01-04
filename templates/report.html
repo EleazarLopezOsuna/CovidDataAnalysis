@@ -84,7 +84,7 @@
                 rightColumn = rightColumn.replaceAll(' 00:00:00', '').replaceAll('[','').replaceAll(']', '')
                 rightColumn = doc.splitTextToSize(rightColumn, 88)
                 doc.text(rightColumn, 109, 72)
-                doc.addImage(img, 25, 155);
+                doc.addImage(img, 25, 175);
                 doc.save('report.pdf');
             }
         });
