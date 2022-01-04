@@ -23,6 +23,7 @@ from dataAnalysis.twentiethItem import twentiethItem
 from dataAnalysis.seventeenthItem import seventeenthItem
 from dataAnalysis.sixteenthItem import sixteenthItem
 from dataAnalysis.fourteenthItem import fourteenthItem
+from dataAnalysis.eleventhItem import eleventhItem
 
 app = Flask(__name__)
 
@@ -1037,6 +1038,37 @@ def fourteenthItemAnalysis():
         request.form['columnaRegion'],
         request.form['nombreRegion'],
         request.form['columnaMuertes'],
+        request.form['columnaDias'],
+        request.form['inputPrediccion'],
+        data
+    )
+    analysis1.dataFilter()
+    resultados = analysis1.analysis()
+    res = render_template(
+        'report.html',
+        results = resultados,
+        analysis = analisis,
+        deaths = muertes,
+        others = otros,
+        percentages = porcentajes,
+        predictions = predicciones,
+        rates = tasas,
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        analysisResult = resultados
+    )
+    return res
+
+@app.route("/eleventhItemAnalysis", methods=['GET', 'POST'])
+def eleventhItemAnalysis():
+    global data
+    analysis1 = eleventhItem(
+        request.form['columnaContinente'],
+        request.form['nombreContinente'],
+        request.form['columnaPais'],
+        request.form['nombrePais'],
+        request.form['columnaGenero'],
+        request.form['columnaInfectados'],
         request.form['columnaDias'],
         request.form['inputPrediccion'],
         data
