@@ -900,7 +900,6 @@ def twentyThirdItemAnalysis():
         request.form['nombrePais'],
         request.form['columnaFactor'],
         request.form['columnaDias'],
-        request.form['inputPrediccion'],
         data
     )
     analysis1.dataFilter()
@@ -931,7 +930,6 @@ def twentyFourthItemAnalysis():
         request.form['columnaInfectados'],
         request.form['columnaPruebas'],
         request.form['columnaDias'],
-        request.form['inputPrediccion'],
         data
     )
     analysis1.dataFilter()
@@ -964,7 +962,6 @@ def twentySecondItemAnalysis():
         request.form['columnaInfectados'],
         request.form['columnaMuertes'],
         request.form['columnaDias'],
-        request.form['inputPrediccion'],
         data
     )
     analysis1.dataFilter()
