@@ -63,6 +63,233 @@ In both cases will have the "Guardar como PDF" button at the end. When clicked t
 
 For data integrity we must reload our files before do another analysis.
 
+##### Analysis options requirements
+1. Tendencia de la infección por Covid-19 en un País
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais
+        -Nombre
+    -Nuevos infectados
+
+2. Predicción de Infertados en un País
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais
+        -Nombre
+    -Dia a predecir
+    -Infectados acumulados
+
+3. Indice de Progresión de la pandemia
+    -Dia
+    -Infectados totales
+
+4. Predicción de mortalidad por COVID en un Departamento
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais [opcional]
+        -Nombre [opcional]
+    -Departamento
+        -Nombre
+    -Dia a predecir
+    -Muertos
+
+5. Predicción de mortalidad por COVID en un País
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais
+        -Nombre
+    -Dia a predecir
+    -Muertos acumulados
+
+6. Análisis del número de muertes por coronavirus en un País
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais
+        -Nombre
+    -Muertos acumulados
+
+7. Tendencia del número de infectados por día de un País
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais?
+        -Nombre
+    -Nuevos infectados
+
+8. Predicción de casos de un país para un año
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais
+        -Nombre
+    -Año a predecir
+    -Infectados totales
+
+9. Tendencia de la vacunación de en un País
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais
+        -Nombre
+    -Nuevos vacunados
+
+10. Analisis Comparativo de Vacunacion entre 2 paises
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais
+        -Nombre
+    -Pais
+        -Nombre
+    -Nuevos vacunados
+
+11. Porcentaje de hombres infectados por covid-19 en un País desde el primer caso activo
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais
+        -Nombre
+    -Nuevos infectados
+    -Genero
+
+12. Analisis Comparativo entres 2 paises o continentes
+    -Dia
+    -Continente
+        -Continente 1 y Continente 2
+    -Pais
+        -Pais 1 y Pais 2
+    -Muertes acumuladas
+
+13. Muertes promedio por casos confirmados y edad de covid 19 en un País
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais
+        -Nombre
+    -Edad
+    -Casos nuevos
+
+14. Muertes según regiones de un país - Covid 19
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais [opcional]
+        -Nombre [opcional]
+    -Region
+        -Nombre
+    -Dia a predecir
+    -Muertes
+
+15. Tendencia de casos confirmados de Coronavirus en un departamento de un País
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais [opcional]
+        -Nombre [opcional]
+    -Departamento
+        -Nombre
+    -Casos confirmados
+
+16. Porcentaje de muertes frente al total de casos en un país, región o continente
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais [opcional]
+        -Nombre [opcional]
+    -Region [opcional]
+        -Nombre [opcional]
+    -Dia a predecir
+    -Infectados acumulados
+    -Muertes acumuladas
+
+17. Tasa de comportamiento de casos activos en relación al número de muertes en un continente
+    -Dia
+    -Continente
+        -Nombre
+    -Dia a predecir
+    -Casos activos
+    -Muertes acumuladas
+
+18. Comportamiento y clasificación de personas infectadas por COVID-19 por municipio en un País
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais [opcional]
+        -Nombre [opcional]
+    -Departamento [opcional]
+        -Nombre [opcional]
+    -Municipio
+        -Nombre
+    -Infectados
+    -Comportamiento
+    -Clasificacion
+    -Dia a predecir
+
+19. Predicción de muertes en el último día del primer año de infecciones en un país
+    -Dia
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais
+        -Nombre
+    -Muertes
+    -Dia a predecir (31-dic-2020)
+
+20. Tasa de crecimiento de casos de COVID-19 en relación con nuevos casos diarios y tasa de muerte por COVID-19
+    -Dia
+    -Infectados totales
+    -Infectados diarios
+    -Muertes totales
+    -Dia a predecir
+
+21. Predicciones de casos y muertes en todo el mundo
+    -Dia
+    -Infectados totales
+    -Muertos totales
+    -Dia a predecir
+
+22. Tasa de mortalidad por coronavirus (COVID-19) en un país
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais
+        -Nombre
+    -Dia
+    -Infectados totales
+    -Muertos totales
+    -Dia a predecir
+
+23. Factores de muerte por COVID-19 en un país
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais
+        -Nombre
+    -Dia
+    -Factor de muerte
+    -Muertos totales
+    -Dia a predecir
+
+24. Comparación entre el número de casos detectados y el número de pruebas de un país
+    -Continente [opcional]
+        -Nombre [opcional]
+    -Pais
+        -Nombre
+    -Dia
+    -Infectados totales
+    -Pruebas totales
+
+25. Predicción de casos confirmados por día
+    -Continente
+        -Nombre
+    -Pais
+        -Nombre
+    -Dia
+    -Infectados diarios
+    -Dia a predecir
+
 ## Technical Manual <a name="Technical-Manual"></a>
 This project is using python3 as backend, and libraries such as
 * click
