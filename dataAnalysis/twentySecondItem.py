@@ -38,7 +38,7 @@ class twentySecondItem():
             transformedDate.append(int(datetime.timestamp(formatedDate)))
         self.data[self.dayColumn] = transformedDate
         x = np.asarray(self.data[self.dayColumn]).reshape(-1, 1)
-        y = self.data[self.infectedColumn]
+        y = self.data[self.deathsColumn] / self.data[self.infectedColumn]
         formatedDate = datetime.now()
         try:
             formatedDate = datetime.strptime(self.predictionDate, '%d-%m-%Y')
@@ -106,10 +106,12 @@ class twentySecondItem():
         leftColumn += '   En base a la informacion proporcionada y aplicando metodos analiticos mediante el uso de software, se obtuvieron los '
         leftColumn += 'siguientes valores: \\nEl coeficiente de regresion lineal obtenido '
         leftColumn += 'fue de ' + str(coef) + '\\nEl error cuadratico medio (ECM) es de ' + str(mse)
-        leftColumn += '\\nLa prediccion obtenida para la fecha ' + str(formatedDate) + ' es de ' + str(prediction) + ' infectados.", '
+        leftColumn += '\\nLa tasa predicha para la fecha ' + str(formatedDate) + ' es de ' + str(prediction) + ' lo que significa que '
+        leftColumn += 'por cada caso positivo hay ' + str(prediction) + ' muertos, estos datos fueron '
+        leftColumn += 'obtenido mediante la division (' + str(self.deathsColumn) + ' / ' + str(self.infectedColumn) + ').", '
         rightColumn = '"rightColumn": "   Mediante el uso de librerias tales como pandas, sklearn, scipy, numpy y flask '
         rightColumn += 'y los datos proporcionados, se creo un modelo de regresion lineal el cual es capaz de realizar predicciones '
-        rightColumn += 'sobre el comportamiento de los infectados en ' + str(self.countryName) + '. El modelo tiene un coeficiente de determinacion de '
+        rightColumn += 'sobre el comportamiento de la tasa en ' + str(self.countryName) + '. El modelo tiene un coeficiente de determinacion de '
         rightColumn += str(r2) + ' lo cual indica que '
         rightColumn += 'el modelo esta ajustado de manera correcta. ' if(r2 > 0.7) else 'el modelo no esta ajustado de la mejor manera. '
         rightColumn += 'El modelo fue entrenado mediante la ecuacion y = ' + str(coef) + 'X +' + '(' + str(intercept) + ')"'
