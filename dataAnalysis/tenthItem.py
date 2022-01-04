@@ -42,12 +42,12 @@ class tenthItem():
             transformedDate.append(int(datetime.timestamp(formatedDate)))
         self.firstSet[self.dayColumn] = transformedDate
         self.firstSet = self.firstSet.drop_duplicates(subset=[self.dayColumn], keep='last')
-        x = np.asarray(self.firstSet[self.dayColumn]).reshape(-1, 1)
+        x1 = np.asarray(self.firstSet[self.dayColumn]).reshape(-1, 1)
         self.firstSet[self.dayColumn] = savedDayColumn
         y1 = self.firstSet[self.vaccinedColumn]
         regr = linear_model.LinearRegression()
-        regr.fit(x, y1)
-        pred1 = regr.predict(x)
+        regr.fit(x1, y1)
+        pred1 = regr.predict(x1)
         mse1 = math.sqrt(mean_squared_error(y1, pred1))
         coef1 = regr.coef_
         intercept1 = regr.intercept_
@@ -70,12 +70,12 @@ class tenthItem():
             transformedDate.append(int(datetime.timestamp(formatedDate)))
         self.secondSet[self.dayColumn] = transformedDate
         self.secondSet = self.secondSet.drop_duplicates(subset=[self.dayColumn], keep='last')
-        x = np.asarray(self.secondSet[self.dayColumn]).reshape(-1, 1)
+        x2 = np.asarray(self.secondSet[self.dayColumn]).reshape(-1, 1)
         self.secondSet[self.dayColumn] = savedDayColumn
         y2 = self.secondSet[self.vaccinedColumn]
         regr = linear_model.LinearRegression()
-        regr.fit(x, y2)
-        pred2 = regr.predict(x)
+        regr.fit(x2, y2)
+        pred2 = regr.predict(x2)
         mse2 = math.sqrt(mean_squared_error(y2, pred2))
         coef2 = regr.coef_
         intercept2 = regr.intercept_
@@ -83,7 +83,7 @@ class tenthItem():
 
 
         labels = []
-        for label in x:
+        for label in x1:
             dt_obj = datetime.fromtimestamp(label[0]).strftime('%d-%m-%y')
             labels.append(dt_obj)
         setValues = []
