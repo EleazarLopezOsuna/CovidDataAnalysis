@@ -549,7 +549,6 @@ def firstItemAnalysis():
         request.form['nombrePais'],
         request.form['columnaInfectados'],
         request.form['columnaDias'],
-        request.form['inputPrediccion'],
         data
     )
     analysis1.dataFilter()
@@ -579,7 +578,6 @@ def seventhItemAnalysis():
         request.form['nombrePais'],
         request.form['columnaInfectados'],
         request.form['columnaDias'],
-        request.form['inputPrediccion'],
         data
     )
     analysis1.dataFilter()
