@@ -47,6 +47,7 @@ class twelfthItem():
         savedDayColumn = self.firstSet[self.dayColumn]
         for date in self.firstSet[self.dayColumn]:
             formatedDate = datetime.now()
+            date = str(date).replace(' 00:00:00', '')
             try:
                 formatedDate = datetime.strptime(date, '%d/%m/%Y')
             except:
@@ -75,6 +76,7 @@ class twelfthItem():
         savedDayColumn = self.secondSet[self.dayColumn]
         for date in self.secondSet[self.dayColumn]:
             formatedDate = datetime.now()
+            date = str(date).replace(' 00:00:00', '')
             try:
                 formatedDate = datetime.strptime(date, '%d/%m/%Y')
             except:
@@ -185,6 +187,7 @@ class twelfthItem():
         transformedDate = []
         for date in self.secondSet[self.dayColumn]:
             formatedDate = datetime.now()
+            date = str(date).replace(' 00:00:00', '')
             try:
                 formatedDate = datetime.strptime(date, '%d/%m/%Y')
             except:

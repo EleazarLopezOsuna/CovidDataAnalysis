@@ -20,6 +20,7 @@ class twentyFirstItem():
         savedDayColumn = self.data[self.dayColumn]
         for date in self.data[self.dayColumn]:
             formatedDate = datetime.now()
+            date = str(date).replace(' 00:00:00', '')
             try:
                 formatedDate = datetime.strptime(date, '%d/%m/%Y')
             except:
@@ -150,6 +151,7 @@ class twentyFirstItem():
         transformedDate = []
         for date in self.data[self.dayColumn]:
             formatedDate = datetime.now()
+            date = str(date).replace(' 00:00:00', '')
             try:
                 formatedDate = datetime.strptime(date, '%d/%m/%Y')
             except:

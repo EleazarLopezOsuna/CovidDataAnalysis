@@ -29,6 +29,7 @@ class nineteenthItem():
         transformedDate = []
         for date in self.data[self.dayColumn]:
             formatedDate = datetime.now()
+            date = str(date).replace(' 00:00:00', '')
             try:
                 formatedDate = datetime.strptime(date, '%d/%m/%Y')
             except:
@@ -41,6 +42,7 @@ class nineteenthItem():
                         formatedDate = datetime.strptime(date, '%Y-%m-%d')
             transformedDate.append(int(datetime.timestamp(formatedDate)))
         self.data[self.dayColumn] = transformedDate
+        self.data = self.data.drop_duplicates(subset=[self.dayColumn], keep='last')
         x = np.asarray(self.data[self.dayColumn]).reshape(-1, 1)
         y = self.data[self.deathsColumn]
         formatedDate = '31-12-2020'

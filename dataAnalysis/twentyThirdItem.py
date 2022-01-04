@@ -30,6 +30,7 @@ class twentyThirdItem():
         transformedDate = []
         for date in self.data[self.dayColumn]:
             formatedDate = datetime.now()
+            date = str(date).replace(' 00:00:00', '')
             try:
                 formatedDate = datetime.strptime(date, '%d/%m/%Y')
             except:
