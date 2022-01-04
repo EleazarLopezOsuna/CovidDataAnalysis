@@ -22,6 +22,7 @@ from dataAnalysis.twentySecondItem import twentySecondItem
 from dataAnalysis.twentiethItem import twentiethItem
 from dataAnalysis.seventeenthItem import seventeenthItem
 from dataAnalysis.sixteenthItem import sixteenthItem
+from dataAnalysis.fourteenthItem import fourteenthItem
 
 app = Flask(__name__)
 
@@ -427,6 +428,26 @@ def othersComparacionCasosDetectadosNumeroPruebas():
 
 @app.route("/")
 def home():
+    return render_template(
+        'index.html',
+        analysis = analisis,
+        deaths = muertes,
+        others = otros,
+        percentages = porcentajes,
+        predictions = predicciones,
+        rates = tasas,
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d")
+    )
+
+@app.route("/preLoadData", methods=['GET', 'POST'])
+def preLoadData():
+    if request.method == 'POST':
+        global data
+        data = pd.read_csv('preload.csv')
+        headers.clear()
+        for col_name in data.columns: 
+            headers.append(col_name)
     return render_template(
         'index.html',
         analysis = analisis,
@@ -983,6 +1004,38 @@ def sixteenthItemAnalysis():
         request.form['columnaRegion'],
         request.form['nombreRegion'],
         request.form['columnaInfectados'],
+        request.form['columnaMuertes'],
+        request.form['columnaDias'],
+        request.form['inputPrediccion'],
+        data
+    )
+    analysis1.dataFilter()
+    resultados = analysis1.analysis()
+    res = render_template(
+        'report.html',
+        results = resultados,
+        analysis = analisis,
+        deaths = muertes,
+        others = otros,
+        percentages = porcentajes,
+        predictions = predicciones,
+        rates = tasas,
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        analysisResult = resultados
+    )
+    return res
+
+@app.route("/fourteenthItemAnalysis", methods=['GET', 'POST'])
+def fourteenthItemAnalysis():
+    global data
+    analysis1 = fourteenthItem(
+        request.form['columnaContinente'],
+        request.form['nombreContinente'],
+        request.form['columnaPais'],
+        request.form['nombrePais'],
+        request.form['columnaRegion'],
+        request.form['nombreRegion'],
         request.form['columnaMuertes'],
         request.form['columnaDias'],
         request.form['inputPrediccion'],
