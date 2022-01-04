@@ -41,7 +41,13 @@ class sixteenthItem():
             try:
                 formatedDate = datetime.strptime(date, '%d/%m/%Y')
             except:
-                formatedDate = datetime.strptime(date, '%Y/%m/%d')
+                try:
+                    formatedDate = datetime.strptime(date, '%Y/%m/%d')
+                except:
+                    try:
+                        formatedDate = datetime.strptime(date, '%Y-%m-%d')
+                    except:
+                        formatedDate = datetime.strptime(date, '%Y-%m-%d')
             transformedDate.append(int(datetime.timestamp(formatedDate)))
         self.data[self.dayColumn] = transformedDate
         x = np.asarray(self.data[self.dayColumn]).reshape(-1, 1)

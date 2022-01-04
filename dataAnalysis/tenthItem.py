@@ -32,7 +32,13 @@ class tenthItem():
             try:
                 formatedDate = datetime.strptime(date, '%d/%m/%Y')
             except:
-                formatedDate = datetime.strptime(date, '%Y/%m/%d')
+                try:
+                    formatedDate = datetime.strptime(date, '%Y/%m/%d')
+                except:
+                    try:
+                        formatedDate = datetime.strptime(date, '%Y-%m-%d')
+                    except:
+                        formatedDate = datetime.strptime(date, '%Y-%m-%d')
             transformedDate.append(int(datetime.timestamp(formatedDate)))
         self.firstSet[self.dayColumn] = transformedDate
         self.firstSet = self.firstSet.drop_duplicates(subset=[self.dayColumn], keep='last')
@@ -54,7 +60,13 @@ class tenthItem():
             try:
                 formatedDate = datetime.strptime(date, '%d/%m/%Y')
             except:
-                formatedDate = datetime.strptime(date, '%Y/%m/%d')
+                try:
+                    formatedDate = datetime.strptime(date, '%Y/%m/%d')
+                except:
+                    try:
+                        formatedDate = datetime.strptime(date, '%Y-%m-%d')
+                    except:
+                        formatedDate = datetime.strptime(date, '%Y-%m-%d')
             transformedDate.append(int(datetime.timestamp(formatedDate)))
         self.secondSet[self.dayColumn] = transformedDate
         self.secondSet = self.secondSet.drop_duplicates(subset=[self.dayColumn], keep='last')
@@ -158,7 +170,13 @@ class tenthItem():
             try:
                 formatedDate = datetime.strptime(date, '%d/%m/%Y')
             except:
-                formatedDate = datetime.strptime(date, '%Y/%m/%d')
+                try:
+                    formatedDate = datetime.strptime(date, '%Y/%m/%d')
+                except:
+                    try:
+                        formatedDate = datetime.strptime(date, '%Y-%m-%d')
+                    except:
+                        formatedDate = datetime.strptime(date, '%Y-%m-%d')
             transformedDate.append(int(datetime.timestamp(formatedDate)))
         self.secondSet[self.dayColumn] = transformedDate
         self.secondSet = self.secondSet.drop_duplicates(subset=[self.dayColumn], keep='last')

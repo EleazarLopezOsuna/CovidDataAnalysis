@@ -38,7 +38,13 @@ class thirteenthItem():
             try:
                 formatedDate = datetime.strptime(date, '%d/%m/%Y')
             except:
-                formatedDate = datetime.strptime(date, '%Y/%m/%d')
+                try:
+                    formatedDate = datetime.strptime(date, '%Y/%m/%d')
+                except:
+                    try:
+                        formatedDate = datetime.strptime(date, '%Y-%m-%d')
+                    except:
+                        formatedDate = datetime.strptime(date, '%Y-%m-%d')
             transformedDate.append(int(datetime.timestamp(formatedDate)))
         self.data[self.dayColumn] = transformedDate
         self.data = self.data.drop_duplicates(subset=[self.dayColumn], keep='last')
@@ -166,7 +172,13 @@ class thirteenthItem():
             try:
                 formatedDate = datetime.strptime(date, '%d/%m/%Y')
             except:
-                formatedDate = datetime.strptime(date, '%Y/%m/%d')
+                try:
+                    formatedDate = datetime.strptime(date, '%Y/%m/%d')
+                except:
+                    try:
+                        formatedDate = datetime.strptime(date, '%Y-%m-%d')
+                    except:
+                        formatedDate = datetime.strptime(date, '%Y-%m-%d')
             transformedDate.append(int(datetime.timestamp(formatedDate)))
         self.data[self.dayColumn] = transformedDate
         self.data = self.data.drop_duplicates(subset=[self.dayColumn], keep='last')
