@@ -18,6 +18,7 @@ from dataAnalysis.nineteenthItem import nineteenthItem
 from dataAnalysis.thirdItem import thirdItem
 from dataAnalysis.twentyThirdItem import twentyThirdItem
 from dataAnalysis.twentyFourthItem import twentyFourthItem
+from dataAnalysis.twentySecondItem import twentySecondItem
 
 app = Flask(__name__)
 
@@ -443,7 +444,6 @@ def loadData():
         if (file_ext == '.csv'):
             global data
             data = pd.read_csv(file)
-            data.dropna(inplace = True)
             headers.clear()
             for col_name in data.columns: 
                 headers.append(col_name)
@@ -877,6 +877,37 @@ def twentyFourthItemAnalysis():
         today = date.today().strftime("%Y-%m-%d"),
         analysisResult = resultados,
         analysisResult2 = resultados2
+    )
+    return res
+
+@app.route("/twentySecondItemAnalysis", methods=['GET', 'POST'])
+def twentySecondItemAnalysis():
+    global data
+    analysis1 = twentySecondItem(
+        request.form['columnaContinente'],
+        request.form['nombreContinente'],
+        request.form['columnaPais'],
+        request.form['nombrePais'],
+        request.form['columnaInfectados'],
+        request.form['columnaMuertes'],
+        request.form['columnaDias'],
+        request.form['inputPrediccion'],
+        data
+    )
+    analysis1.dataFilter()
+    resultados = analysis1.analysis()
+    res = render_template(
+        'report.html',
+        results = resultados,
+        analysis = analisis,
+        deaths = muertes,
+        others = otros,
+        percentages = porcentajes,
+        predictions = predicciones,
+        rates = tasas,
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        analysisResult = resultados
     )
     return res
 

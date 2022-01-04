@@ -16,7 +16,7 @@ class ninthItem():
         self.vaccineColumn = vaccineColumn
         self.dayColumn = dayColumn
         self.predictionDate = predictionDay
-        self.data = data
+        self.data = data.dropna(subset=[continentColumn, countryColumn, vaccineColumn, dayColumn])
 
     def dataFilter(self):
         if(self.continentColumn != '' and self.continentName != ''):

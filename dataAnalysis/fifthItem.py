@@ -16,7 +16,7 @@ class fifthItem():
         self.deathsColumn = deathsColumn
         self.dayColumn = dayColumn
         self.predictionDate = predictionDay
-        self.data = data
+        self.data = data.dropna(subset=[continentColumn, countryColumn, deathsColumn, dayColumn])
 
     def dataFilter(self):
         if(self.continentColumn != '' and self.continentName != ''):

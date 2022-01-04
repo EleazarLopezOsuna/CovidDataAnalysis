@@ -11,7 +11,7 @@ class thirdItem():
     def __init__(self, infectedColumn, dayColumn, data):
         self.infectedColumn = infectedColumn
         self.dayColumn = dayColumn
-        self.data = data
+        self.data = data.dropna(subset=[infectedColumn, dayColumn])
 
     def analysis(self):
         transformedDate = []

@@ -16,7 +16,7 @@ class twentyThirdItem():
         self.factorColumn = factorColumn
         self.dayColumn = dayColumn
         self.predictionDate = predictionDay
-        self.data = data
+        self.data = data.dropna(subset=[continentColumn, countryColumn, factorColumn, dayColumn])
 
     def dataFilter(self):
         if(self.continentColumn != '' and self.continentName != ''):

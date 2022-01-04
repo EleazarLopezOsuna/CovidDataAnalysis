@@ -16,7 +16,7 @@ class seventhItem():
         self.infectedColumn = infectedColumn
         self.dayColumn = dayColumn
         self.predictionDate = predictionDay
-        self.data = data
+        self.data = data.dropna(subset=[continentColumn, countryColumn, infectedColumn, dayColumn])
 
     def dataFilter(self):
         if(self.continentColumn != '' and self.continentName != ''):

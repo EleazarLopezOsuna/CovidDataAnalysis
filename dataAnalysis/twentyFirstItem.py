@@ -13,7 +13,7 @@ class twentyFirstItem():
         self.deathsColumn = deathsColumn
         self.dayColumn = dayColumn
         self.predictionDate = predictionDay
-        self.data = data
+        self.data = data.dropna(subset=[infectedColumn, deathsColumn, dayColumn])
 
     def analysis1(self):
         transformedDate = []

@@ -17,7 +17,7 @@ class twentyFourthItem():
         self.testColumn = testColumn
         self.dayColumn = dayColumn
         self.predictionDate = predictionDay
-        self.data = data
+        self.data = data.dropna(subset=[continentColumn, countryColumn, infectedColumn, testColumn, dayColumn])
 
     def analysis1(self):
         transformedDate = []
