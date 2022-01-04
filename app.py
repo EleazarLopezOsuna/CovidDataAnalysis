@@ -638,7 +638,6 @@ def fifteenthItemAnalysis():
         request.form['nombreDepartamento'],
         request.form['columnaCasos'],
         request.form['columnaDias'],
-        request.form['inputPrediccion'],
         data
     )
     analysis1.dataFilter()
@@ -1056,7 +1055,6 @@ def sixteenthItemAnalysis():
         request.form['columnaInfectados'],
         request.form['columnaMuertes'],
         request.form['columnaDias'],
-        request.form['inputPrediccion'],
         data
     )
     analysis1.dataFilter()
