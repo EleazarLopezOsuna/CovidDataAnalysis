@@ -8,8 +8,14 @@
             <input type="submit" value="Load File">
         </form>
     </div>
-    <form action="preLoadData" class="row g-3" method="post" enctype="multipart/form-data">
-        <input type="submit" value="Use preload (owid-covid-data) File">
+    <form action="preLoadDataCSV" class="row g-3" method="post" enctype="multipart/form-data">
+        <input type="submit" value="Use preload (owid-covid-data.csv) File">
+    </form>
+    <form action="preLoadDataXLS" class="row g-3" method="post" enctype="multipart/form-data">
+        <input type="submit" value="Use preload (owid-covid-data.xls) File">
+    </form>
+    <form action="preLoadDataJSON" class="row g-3" method="post" enctype="multipart/form-data">
+        <input type="submit" value="Use preload (owid-covid-data.json) File">
     </form>
 </div>
 {% endblock %}

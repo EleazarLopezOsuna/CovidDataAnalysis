@@ -446,11 +446,51 @@ def home():
         today = date.today().strftime("%Y-%m-%d")
     )
 
-@app.route("/preLoadData", methods=['GET', 'POST'])
-def preLoadData():
+@app.route("/preLoadDataCSV", methods=['GET', 'POST'])
+def preLoadDataCSV():
     if request.method == 'POST':
         global data
         data = pd.read_csv('preload.csv')
+        headers.clear()
+        for col_name in data.columns: 
+            headers.append(col_name)
+    return render_template(
+        'index.html',
+        analysis = analisis,
+        deaths = muertes,
+        others = otros,
+        percentages = porcentajes,
+        predictions = predicciones,
+        rates = tasas,
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d")
+    )
+
+@app.route("/preLoadDataXLS", methods=['GET', 'POST'])
+def preLoadDataXLS():
+    if request.method == 'POST':
+        global data
+        data = pd.read_excel('preload.xls')
+        headers.clear()
+        for col_name in data.columns: 
+            headers.append(col_name)
+    return render_template(
+        'index.html',
+        analysis = analisis,
+        deaths = muertes,
+        others = otros,
+        percentages = porcentajes,
+        predictions = predicciones,
+        rates = tasas,
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d")
+    )
+
+@app.route("/preLoadDataJSON", methods=['GET', 'POST'])
+def preLoadDataJSON():
+    if request.method == 'POST':
+        global data
+        data = pd.read_json('preload.json')
         headers.clear()
         for col_name in data.columns: 
             headers.append(col_name)
