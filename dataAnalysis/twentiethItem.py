@@ -17,6 +17,10 @@ class twentiethItem():
         self.data = data.dropna(subset=[daylyInfectedColumn, accumulatedInfectedColumn, deathsColumn, deathsColumn, dayColumn])
 
     def analysis1(self):
+        isZero = self.data[self.accumulatedInfectedColumn] != 0
+        self.data = self.data[isZero]
+        isZero = self.data[self.deathsColumn] != 0
+        self.data = self.data[isZero]
         transformedDate = []
         savedDayColumn = self.data[self.dayColumn]
         for date in self.data[self.dayColumn]:
@@ -143,6 +147,10 @@ class twentiethItem():
         return output
 
     def analysis2(self):
+        isZero = self.data[self.accumulatedInfectedColumn] != 0
+        self.data = self.data[isZero]
+        isZero = self.data[self.deathsColumn] != 0
+        self.data = self.data[isZero]
         transformedDate = []
         for date in self.data[self.dayColumn]:
             formatedDate = datetime.now()

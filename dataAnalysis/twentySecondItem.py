@@ -26,6 +26,8 @@ class twentySecondItem():
         if(self.countryColumn != '' and self.countryName != ''):
             isCountry = self.data[self.countryColumn] == self.countryName
             self.data = self.data[isCountry]
+        isZero = self.data[self.infectedColumn] != 0
+        self.data = self.data[isZero]
 
     def analysis(self):
         transformedDate = []
