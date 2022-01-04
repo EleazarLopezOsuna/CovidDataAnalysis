@@ -470,7 +470,7 @@ def preLoadDataCSV():
 def preLoadDataXLS():
     if request.method == 'POST':
         global data
-        data = pd.read_excel('preload.xls')
+        data = pd.read_excel('preload.xlsx')
         headers.clear()
         for col_name in data.columns: 
             headers.append(col_name)
