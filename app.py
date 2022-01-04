@@ -477,9 +477,17 @@ def loadData():
             for col_name in data.columns: 
                 headers.append(col_name)
         elif (file_ext == '.json'):
-            print('Is json')
+            global data
+            data = pd.read_json(file)
+            headers.clear()
+            for col_name in data.columns: 
+                headers.append(col_name)
         elif (file_ext in ['.xls', '.xlsx']):
-            print('Is excel')
+            global data
+            data = pd.read_excel(file)
+            headers.clear()
+            for col_name in data.columns: 
+                headers.append(col_name)
     return render_template(
         'index.html',
         analysis = analisis,
