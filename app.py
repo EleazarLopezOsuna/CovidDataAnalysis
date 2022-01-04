@@ -938,6 +938,7 @@ def twentyFourthItemAnalysis():
         request.form['inputPrediccion'],
         data
     )
+    analysis1.dataFilter()
     resultados = analysis1.analysis1()
     resultados2 = analysis1.analysis2()
     res = render_template(

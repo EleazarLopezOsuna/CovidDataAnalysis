@@ -19,6 +19,18 @@ class twentyFourthItem():
         self.predictionDate = predictionDay
         self.data = data.dropna(subset=[continentColumn, countryColumn, infectedColumn, testColumn, dayColumn])
 
+    def dataFilter(self):
+        if(self.continentColumn != '' and self.continentName != ''):
+            isContinent = self.data[self.continentColumn] == self.continentName
+            self.data = self.data[isContinent]
+        if(self.countryColumn != '' and self.countryName != ''):
+            isCountry = self.data[self.countryColumn] == self.countryName
+            self.data = self.data[isCountry]
+        isZero = self.data[self.infectedColumn] != 0
+        self.data = self.data[isZero]
+        isZero = self.data[self.testColumn] != 0
+        self.data = self.data[isZero]
+
     def analysis1(self):
         transformedDate = []
         savedDayColumn = self.data[self.dayColumn]
@@ -40,6 +52,7 @@ class twentyFourthItem():
         x = np.asarray(self.data[self.dayColumn]).reshape(-1, 1)
         self.data[self.dayColumn] = savedDayColumn
         y1 = self.data[self.infectedColumn]
+        print(x)
         formatedDate = datetime.now()
         try:
             formatedDate = datetime.strptime(self.predictionDate, '%d-%m-%Y')
