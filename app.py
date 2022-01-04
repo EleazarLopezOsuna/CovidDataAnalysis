@@ -28,6 +28,7 @@ from dataAnalysis.thirteenthItem import thirteenthItem
 from dataAnalysis.sixthItem import sixthItem
 from dataAnalysis.tenthItem import tenthItem
 from dataAnalysis.twelfthItem import twelfthItem
+from dataAnalysis.eighteenthItem import eighteenthItem
 
 app = Flask(__name__)
 
@@ -467,23 +468,21 @@ def preLoadData():
 
 @app.route("/loadData", methods=['GET', 'POST'])
 def loadData():
+    global data
     if request.method == 'POST':
         file = request.files['upload']
         file_ext = os.path.splitext(file.filename)[1]
         if (file_ext == '.csv'):
-            global data
             data = pd.read_csv(file)
             headers.clear()
             for col_name in data.columns: 
                 headers.append(col_name)
         elif (file_ext == '.json'):
-            global data
             data = pd.read_json(file)
             headers.clear()
             for col_name in data.columns: 
                 headers.append(col_name)
         elif (file_ext in ['.xls', '.xlsx']):
-            global data
             data = pd.read_excel(file)
             headers.clear()
             for col_name in data.columns: 
@@ -1207,6 +1206,44 @@ def twelfthItemAnalysis():
         request.form['nombrePais2'],
         request.form['columnaMuertes'],
         request.form['columnaDias'],
+        data
+    )
+    analysis1.dataFilter()
+    resultados = analysis1.analysis1()
+    resultados2 = analysis1.analysis2()
+    res = render_template(
+        'dualReport.html',
+        results = resultados,
+        analysis = analisis,
+        deaths = muertes,
+        others = otros,
+        percentages = porcentajes,
+        predictions = predicciones,
+        rates = tasas,
+        trends = tendencias,
+        today = date.today().strftime("%Y-%m-%d"),
+        analysisResult = resultados,
+        analysisResult2 = resultados2
+    )
+    return res
+
+@app.route("/eighteenthItemAnalysis", methods=['GET', 'POST'])
+def eighteenthItemAnalysis():
+    global data
+    analysis1 = eighteenthItem(
+        request.form['columnaContinente'],
+        request.form['nombreContinente'],
+        request.form['columnaPais'],
+        request.form['nombrePais'],
+        request.form['columnaDepartamento'],
+        request.form['nombreDepartamento'],
+        request.form['columnaMunicipio'],
+        request.form['nombreMunicipio'],
+        request.form['columnaComportamiento'],
+        request.form['columnaClasificacion'],
+        request.form['columnaInfectados'],
+        request.form['columnaDias'],
+        request.form['inputPrediccion'],
         data
     )
     analysis1.dataFilter()
